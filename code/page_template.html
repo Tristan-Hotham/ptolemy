@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ptolemy's World</title>
+<meta name="description" content="Ptolemy's Geography (about AD 150) gives the world as a table of {{source.with_coords|int}} coordinates. I matched {{match.places|int}} of his places to where they really are and measured how far, and in what way, his map is wrong.">
+<meta property="og:title" content="Ptolemy's world, measured">
+<meta property="og:description" content="The ancient world as a table of coordinates, set against a modern map. Shrink his longitudes by {{fit.b|f2}} and his map snaps into place; Scotland is still turned on its side and Sri Lanka is {{taprobane.area_ratio|int}} times too big.">
+<meta property="og:image" content="https://maps.tristanhotham.com/ptolemy/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/ptolemy/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+/* Papyrus and the scribe's ink: Nile-mud brown, terracotta, the blue of the Inner Sea and a gold for Asia. */
+:root{
+  --bg:#F7F2E7; --panel:#EEE6D4; --fg:#22201C; --muted:#68625A; --rule:#E0D6C1; --card:#FFFCF4; --border:#CEC2A8;
+  --eu:#2F5FA7; --af:#B07A12; --as:#B23A2A; --red:#B23A2A; --land:#E7DFCB; --sea:#E9EEEC; --ptol:#9C4A1A;
+  --e1:#2E8A6E; --e2:#8DB255; --e3:#E0A11B; --e4:#D2622A; --e5:#8E2A2A;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15130F; --panel:#1F1C17; --fg:#EEE8DC; --muted:#AAA294; --rule:#332F27; --card:#1A1813; --border:#4A443A;
+  --eu:#7EA7E8; --af:#E8B54F; --as:#F07B66; --red:#F07B66; --land:#2A2720; --sea:#14171A; --ptol:#E39A6A;
+  --e1:#5CC49F; --e2:#A9CC6E; --e3:#E8B54F; --e4:#EC8455; --e5:#E06464; color-scheme:dark; --icofilter:invert(1)}}
+:root[data-theme="dark"]{
+  --bg:#15130F; --panel:#1F1C17; --fg:#EEE8DC; --muted:#AAA294; --rule:#332F27; --card:#1A1813; --border:#4A443A;
+  --eu:#7EA7E8; --af:#E8B54F; --as:#F07B66; --red:#F07B66; --land:#2A2720; --sea:#14171A; --ptol:#E39A6A;
+  --e1:#5CC49F; --e2:#A9CC6E; --e3:#E8B54F; --e4:#EC8455; --e5:#E06464; color-scheme:dark; --icofilter:invert(1)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1240px,calc(100vw - 32px));margin-left:calc((100% - min(1240px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--red);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--red);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(46px,11.5vw,88px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 span{color:var(--red)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block;color:var(--fg)}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:58ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--red);display:block;letter-spacing:.1em;margin-bottom:10px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.a{color:var(--red)} .stats b.b{color:var(--eu)} .stats b.c{color:var(--e1)} .stats b.d{color:var(--af)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:300px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1003;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.twin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:860px){.twin{grid-template-columns:1fr}}
+.mapcap{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;gap:8px;align-items:end}
+.mapcap b{color:var(--fg);font-weight:500}
+.lmap{height:560px;border:1px solid var(--border);background:var(--sea);border-radius:2px;position:relative;overflow:hidden}
+#pmap{background:var(--panel)}
+@media (max-width:860px){.lmap{height:min(62vh,480px)}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 14px 10px;font:400 13px/1.5 var(--mono);margin-top:12px;min-height:90px}
+.side .big{font:800 26px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{border-collapse:collapse;margin:6px 0}
+.side td{padding:3px 12px 3px 0;vertical-align:top}
+.side td:first-child{color:var(--muted);white-space:nowrap}
+.chip{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.maplibregl-map{font:400 12px/1.4 var(--mono)}
+.maplibregl-ctrl-attrib{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.maplibregl-ctrl-attrib a{color:var(--fg)}
+.maplibregl-ctrl-group{background:var(--card)}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:var(--icofilter,none)}
+.lyrWrap{position:absolute;top:10px;left:10px;z-index:3}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:9px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:250px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:min(60vh,470px);overflow:auto}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .hd:first-child{border-top:0;padding-top:0;margin-top:0}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.pinL{font:600 12px/1.1 var(--mono);color:var(--fg);background:color-mix(in srgb,var(--card) 88%,transparent);border:1px solid var(--border);padding:3px 6px;border-radius:2px;white-space:nowrap;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 13px var(--mono);color:var(--muted);z-index:1;text-align:center;padding:20px}
+.fallback{position:absolute;inset:0;width:100%;height:100%}
+.fbnote{position:absolute;left:10px;bottom:10px;right:10px;font:400 12px/1.4 var(--mono);color:var(--muted);background:color-mix(in srgb,var(--card) 92%,transparent);padding:6px 9px;border:1px solid var(--border);border-radius:3px;pointer-events:none}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px;align-items:center}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:6px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.legend i.ln{height:0;border:0;border-top:2px solid;width:18px;border-radius:0}
+.legend i.dl{height:0;border:0;border-top:2px dashed;width:18px;border-radius:0}
+.legend i.sq{border-radius:2px;width:14px}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--red);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+table.tbl{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--mono)}
+table.tbl th{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 6px 6px 0;border-bottom:2px solid var(--fg);white-space:nowrap;position:sticky;top:0;background:var(--card)}
+table.tbl td{padding:6px 6px 6px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.tbl td.r,table.tbl th.r{text-align:right;white-space:nowrap}
+table.tbl tr[data-k]{cursor:pointer}
+table.tbl tr[data-k]:hover td{background:var(--panel)}
+.tablebox{max-height:520px;overflow:auto;border:1px solid var(--border);background:var(--card);padding:0 10px}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--red);border-color:var(--red);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+[hidden]{display:none!important}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>History</span><span>Alexandria, about AD 150</span></div>
+<header class="hero">
+  <h1>Ptolemy's <span>World</span></h1>
+  <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">Around AD 150, in Alexandria, Claudius Ptolemy wrote down the known world as a list of coordinates: a longitude and a latitude for every town, cape and river mouth from Ireland to China. I matched {{match.places|int}} of his places to where they really are and measured his map against the real one.</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Sources: Grasshoff and Defaux's catalogue of the Geography; Pleiades; DARE; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="a">{{source.with_coords|int}}</b><span>places with coordinates in the Geography's main books</span></div>
+  <div><b class="b">×{{fit.b|f2}}</b><span>shrink his longitudes by this and the map falls into place</span></div>
+  <div><b class="c">{{fit.f1.median_km|int}} km</b><span>median error after that one correction, down from {{fit.f0.median_km|int}} km</span></div>
+  <div><b class="d">{{taprobane.area_ratio|int}}×</b><span>too big: his Taprobane, Sri Lanka, against the real island</span></div>
+</div>
+
+<p class="lede">Ptolemy's Geography contains no map. It is a set of instructions for drawing one, and a table. Book after book lists the places of the inhabited world, province by province, each with two numbers: degrees east of the Fortunate Isles at the western edge of the world, and degrees north of the equator. It is the first attempt we know of to put the whole known world on a grid, and for fourteen centuries, from Byzantine scribes to the printers of the Renaissance, maps of the world were drawn from these numbers.</p>
+<p>Gerd Grasshoff and Oliver Defaux published the whole table as open data: {{source.rows|int}} entries, {{source.with_coords|int}} of them with coordinates, in the two main versions of the manuscripts, called Omega and Xi, and with the modern identification of each place where scholars know it. I matched those identifications to modern coordinates through the Pleiades gazetteer of ancient places, the Digital Atlas of the Roman Empire and my own work on coasts and capes, and kept only matches I could stand behind: {{match.places|int}} distinct real places. Click a place on either map to see it on the other.</p>
+
+<h2><span class="n">01 · Two maps</span>The world as Ptolemy wrote it, and as it is</h2>
+<div class="bleed" id="atlas">
+<div class="controls"><div class="scrollrow" id="colRow"><span class="ctl-l">Colour by</span></div></div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Search a place (Londinium, Alexandria, Taprobane...)" aria-label="Search a place" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="controls"><div class="scrollrow" id="focusRow"><span class="ctl-l">Go to</span></div></div>
+<div class="twin">
+  <div><div class="mapcap"><span><b>Ptolemy's coordinates</b> · on his own grid</span><span>Omega recension</span></div>
+    <div id="pmap" class="lmap" data-fullscreen-map role="application" aria-label="Ptolemy's coordinates drawn on a grid of his degrees, with his coasts joined in the order he lists them"><div class="loading">Drawing Ptolemy's world...</div></div></div>
+  <div><div class="mapcap"><span><b>The same places today</b></span><span>Natural Earth</span></div>
+    <div id="wmap" class="lmap" data-fullscreen-map role="application" aria-label="Modern map of the places identified in Ptolemy's Geography"><div class="loading">Loading the modern map...</div></div></div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="side" id="side" aria-live="polite"></div>
+<p class="src">Left: Ptolemy's longitudes and latitudes (Omega recension) on a plain grid of his degrees, with each degree of longitude drawn at the width it has on his parallel of Rhodes, 36 degrees north, as Marinus of Tyre drew his world map. Brown lines: his coasts, his coastal points joined in the order he lists them. Grey dots (Map layers): the {{source.with_coords|int}} entries with coordinates that I could not, or did not try to, match. Right: the {{match.places|int}} places at their real positions. Arrows (Map layers): from each real place to where Ptolemy puts it once his longitudes are shrunk by {{fit.b|f2}}. Sources: Grasshoff and Defaux (2019), CC BY 4.0; Pleiades (CC BY 3.0); DARE (CC BY-SA); Natural Earth.</p>
+</div>
+
+<h2><span class="n">02 · The stretch</span>A world half as wide again</h2>
+<p>The first thing to notice is that Ptolemy's world is far too wide. From the Sacred Cape in Portugal, Cape St Vincent, to Sera, the capital of the silk people, which scholars take to be Xi'an in China, he counts {{stretch.ptol_span|f1}} degrees of longitude. The real figure is {{stretch.true_span|f1}}: he stretched the known world east to west by {{stretch.ratio|f2}} times. Measured from Alexandria, where he worked, every 10 degrees of real longitude becomes {{stretch.per10|f1}} of his, to the west as well as to the east.</p>
+<p>The usual explanation is the size of the Earth. Ptolemy followed Posidonius and Marinus in giving a degree of the great circle as 500 stadia, where Eratosthenes had reckoned 700. If his distances in stadia along the roads and sea routes were roughly right, turning them into degrees at 500 stadia a degree would make every gap too wide by 700 divided by 500, and to bring his degrees back to real ones you would have to multiply by {{fit.stadia_ratio|f2}}. The best single correction I can find for his longitudes is {{fit.b|f2}}, within {{fit.b_vs_stadia_pct|f1}}% of that. Marinus's long reckoning of the road to the silk lands, which Ptolemy cut but did not cut enough, added to the overshoot in the far east.</p>
+<div class="figure"><p class="fig-h">How far from Alexandria: Ptolemy's longitude against the real one</p><p class="fig-sub">Each dot is a matched place: its real longitude difference from Alexandria (across) and Ptolemy's (up). The dashed line is a perfect map; the solid line is his fitted slope of {{stretch.slope_alex|f2}}. Hover a dot.</p><div class="chart" id="stretchChart"></div><div class="legend" id="contLegend"></div></div>
+<div class="pull">Shrink every longitude by {{fit.b|f2}} and the median place moves from {{fit.f0.median_km|int}} km out to {{fit.f1.median_km|int}} km out.</div>
+
+<h2><span class="n">03 · Far from home</span>The error grows with distance from Alexandria</h2>
+<p>Read exactly as written, with his longitudes lined up on Alexandria, Ptolemy's map is good near home and bad far away. Places within 1,000 km of Alexandria are a median {{alex.near_f0|int}} km out; places more than 4,000 km away, {{alex.far_f0|int}} km out. The rank correlation between distance from Alexandria and error is {{alex.spearman_f0|f2}}. Rome, {{places.Rome.dist_alex|int}} km away, is {{places.Rome.f0_km|int}} km out as written; London {{places.London.f0_km|int}} km; Taxila, in the Punjab, {{places.Taxila.f0_km|int}} km. Most of that is the stretch: once the longitudes are shrunk, Rome is only {{places.Rome.f1_km|int}} km out and Samarkand {{places.Samarkand.f1_km|int}}.</p>
+<div class="figure"><p class="fig-h">Error against distance from Alexandria</p><p class="fig-sub">Median error, as written (aligned on Alexandria) and after shrinking his longitudes by {{fit.b|f2}}, for places in bands of distance from Alexandria. Hover a bar.</p><div class="chart" id="alexChart"></div><div class="legend" id="alexLegend"></div></div>
+<p>His latitudes are better than his longitudes, as you would expect: latitude can be measured from the height of the sun or the length of the longest day, while longitude needed a clock nobody had. Half his places are within {{lat.median_abs|f2}} degrees of the right latitude. But they drift in a consistent way: Britain is a median {{lat.britain|f1}} degrees too far north, Roman Africa {{lat.africa|f1}} degrees too far south, which pushes Carthage {{places.Carthage.lat_err|f1}} degrees off and squeezes the Mediterranean between them.</p>
+
+<h2><span class="n">04 · Scotland</span>Turned on its side</h2>
+<p>The most famous error in the Geography is Scotland. In Ptolemy's coordinates, north of the Solway and the Tyne, Britain does not run north but turns sharply east, so that the northern tip of Scotland points towards Norway. On the real map the Solway Firth to Duncansby Head is a bearing of {{scotland.brg_true|int}} degrees, almost due north. On his it is {{scotland.brg_ptol|int}} degrees, almost due east. Fitting the best rotation to each part separately, his Scotland ({{scotland.n_scot|int}} places) is turned {{scotland.turn|int}} degrees further clockwise than his England and Wales ({{scotland.n_eng|int}} places).</p>
+<div class="figure"><p class="fig-h">Britain in Ptolemy's coordinates and in reality</p><p class="fig-sub">The matched places of Albion, coloured by real latitude from the south coast (light) to the far north of Scotland (dark), drawn at the same scale. Hover a dot; click to see it on the maps.</p><div class="chart" id="britChart"></div></div>
+<p>Nobody knows exactly why. One long-standing idea is that Ptolemy, believing nothing habitable lay much further north than his Thule at 63 degrees, folded Scotland over to keep it inside the limit; another is that he simply joined two separate sources at the wrong angle. Whatever the cause, his Britain is still recognisably Britain coast by coast: the Clyde, the Forth, the Tay, the Wash and the Thames are all in order, just rotated.</p>
+
+<h2><span class="n">05 · India and Taprobane</span>A flattened peninsula and a giant island</h2>
+<p>In the east the errors stop being a matter of scale. Real India is a great triangle hanging south from the Tropic: from Barygaza, modern Bharuch, to Cape Komaria, Cape Comorin, is {{india.lat_span_true|f1}} degrees of latitude. In Ptolemy's coordinates it is {{india.lat_span_ptol|f1}}. The peninsula is flattened against the equator, and the west coast that should run south south east, at {{india.brg_true|int}} degrees, runs east south east, at {{india.brg_ptol|int}}. His Cape Komaria lies at {{india.komaria_lat_o|f1}} degrees north, {{india.komaria_err|f1}} degrees too far north.</p>
+<p>Off its tip, his Taprobane, Sri Lanka, swells to fill the space. Its coast, as he lists it, runs from {{taprobane.lat_max_o|f1}} degrees north to {{taprobane.lat_min_o|f1}} degrees south, across the equator: {{taprobane.lat_span_o|f1}} degrees of latitude against the real island's {{taprobane.lat_span|f1}}. Measured at the same overall scale as the rest of his map, his island covers about {{taprobane.area_ratio|f1}} times the area of the real one.</p>
+<div class="figure"><p class="fig-h">India and Sri Lanka in Ptolemy's coordinates and in reality</p><p class="fig-sub">Left: his matched places in India and Taprobane, and the coast of Taprobane as he lists it (brown). Right: the same places and the real coastline, at the same scale. Hover a dot.</p><div class="chart" id="indiaChart"></div></div>
+
+<h2><span class="n">06 · Closed seas</span>The Caspian and the Indian Ocean</h2>
+<p>Ptolemy got one thing right that many before him had wrong: the Caspian is a lake. Eratosthenes and Strabo had made it a gulf of the northern ocean; Ptolemy closes it on every side. But his Caspian has the wrong shape. Taking the {{caspian.n|int}} river mouths on its shore that can be matched, from the Volga and the Ural in the north to the Kura and the Sefid Rud in the south, the real ones span {{caspian.ns_true|int}} km north to south and {{caspian.ew_true|int}} km east to west; his span {{caspian.ns_ptol|int}} km and {{caspian.ew_ptol|int}} km. A sea {{caspian.ratio_true|f1}} times as long as it is wide becomes one as wide as it is long. He also has the Oxus and the Jaxartes, the Amu Darya and the Syr Darya, flowing into it, when their real mouths are in the Aral Sea, {{caspian.oxus_to_caspian_km|int}} and {{caspian.jaxartes_to_caspian_km|int}} km from the Caspian shore.</p>
+<p>The Indian Ocean he closed by mistake. In his text, unknown land runs south of the Indian Sea from beyond Cape Prason in East Africa to beyond Kattigara, the last port of the Sinae. Prason, which the editors identify with Cape Delgado in Mozambique, he puts at {{ocean.prason_lat_o|int}} degrees south, {{ocean.prason_south_deg|f1}} degrees too far south; Kattigara, if it is near Hanoi as they suggest, at {{ocean.kattigara_lat_o|f1}} degrees south, {{ocean.kattigara_south_deg|f1}} degrees too far south and {{ocean.kattigara_err_km|int}} km from where the rest of his map would place it. The eastern end of his world bends down to meet the southern continent and the ocean becomes an inland sea.</p>
+<div class="figure"><p class="fig-h">The Caspian in Ptolemy's coordinates and in reality</p><p class="fig-sub">River mouths on the Caspian shore, and the mouths of the Oxus and Jaxartes, which he puts on the Caspian and which really reach the Aral Sea. Same scale on both sides. Hover a dot.</p><div class="chart" id="caspChart"></div></div>
+
+<h2><span class="n">07 · Best and worst</span>Where the map is good</h2>
+<p>To see which parts of the map are well drawn, I took each of Ptolemy's 26 regional maps separately and found the best way to lay his coordinates on the real ones, allowing any shift, rotation and scale. What is left over is the error in the shape of the region itself. For the {{n_ranked|int}} regional maps with at least {{min_n|int}} matched places, the best are Sardinia and Sicily (a median {{regions.EU07.shape_km|int}} km), Dacia, Moesia and Thrace ({{regions.EU09.shape_km|int}} km) and Greece ({{regions.EU10.shape_km|int}} km); the worst are India ({{regions.AS10.shape_km|int}} km), Inner Libya and Ethiopia ({{regions.AF04.shape_km|int}} km) and the British Isles ({{regions.EU01.shape_km|int}} km). Placed on the world map as a whole, after the shrinking of longitudes, Cyprus, Syria and Mesopotamia come out best ({{regions.AS04.f1_km|int}} km) and Egypt and Cyrenaica next ({{regions.AF03.f1_km|int}} km): the eastern Mediterranean, the world Ptolemy knew best.</p>
+<div class="figure"><p class="fig-h">Error by regional map</p><p class="fig-sub">Median error in the shape of each region (after its own best shift, rotation and scale) and in its placement on the whole map (after shrinking longitudes by {{fit.b|f2}}). Regional maps with at least {{min_n|int}} matched places. Hover a bar.</p><div class="chart" id="regChart"></div><div class="legend" id="regLegend"></div></div>
+<div class="figure"><p class="fig-h">All 26 regional maps</p><p class="fig-sub">Matched places, median error in shape and in placement, and the median latitude error (positive: too far north). Click a row to see the region on both maps.</p><div class="tablebox"><table class="tbl" id="regTable"></table></div></div>
+
+<h2><span class="n">08 · Two traditions</span>Omega and Xi</h2>
+<p>The Geography survives in two families of manuscripts. Most follow the Omega recension; one important manuscript, the Vaticanus Graecus 191, follows the Xi recension, which covers Books 2 to 5 and the start of Book 6. Of the {{rec.both|int}} entries that have coordinates in both, {{rec.same_pct|int}}% agree exactly. Of the {{rec.differ|int}} that differ, {{rec.lat_only|int}} differ only in latitude and {{rec.lon_only|int}} only in longitude; the median difference is {{rec.median_diff_arcmin|int}} minutes of arc, about {{rec.median_diff_km|int}} km, but {{rec.over1deg|int}} differ by a degree or more. Book 2, on the far west of Europe, differs most ({{rec.by_book.2.pct|int}}% of entries), Book 5, on Asia Minor and the Levant, least ({{rec.by_book.5.pct|int}}%).</p>
+<p>Neither version is clearly better. Fitted the same way on the {{rec.fit_n|int}} matched places that have both, both have a median error of {{rec.fit_omega_km|int}} km and almost identical stretch factors ({{rec.b_omega|f2}} and {{rec.b_xi|f2}}). Where they differ, Xi is closer to the real place {{rec.xi_closer|int}} times and Omega {{rec.omega_closer|int}} times. Turn on the Xi positions in Map layers to see the two side by side.</p>
+<div class="figure"><p class="fig-h">How far the two recensions differ</p><p class="fig-sub">Entries with coordinates in both Omega and Xi, by the larger of the two differences in longitude and latitude. Hover a bar.</p><div class="chart" id="recChart"></div></div>
+
+<h2><span class="n">09 · How I did this</span>Methods and caveats</h2>
+<p><b>The catalogue.</b> Grasshoff and Defaux's catalogue of the main books of the Geography (Books 2 to 7) gives each entry an identifier by book, chapter and section, the regional map it belongs to, its name (in German), the editors' modern identification (also in German, blank where the place is unknown) and its coordinates in the Omega and Xi recensions. I sorted the entries by the kind of feature their names describe, and used only points: towns, capes, river mouths, harbours and islands. Of {{source.points|int}} such points with coordinates, the editors identify {{source.points_identified|int}} ({{source.identified_pct|int}}%). I never matched an entry they leave unidentified.</p>
+<p><b>Matching.</b> I matched {{match.matched|int}} of those {{source.points_identified|int}} identified points, {{match.pct_of_identified|int}}%, giving {{match.places|int}} distinct real places once repeats are removed. {{match.gaz_both|int}} are places in Pleiades or the Digital Atlas of the Roman Empire whose ancient names include Ptolemy's name and whose modern names include the editors' identification (high confidence); {{match.gaz_anc|int}} match on the ancient name alone and {{match.gaz_mod|int}} on the modern name alone, each the only such place in that part of the world (medium); and {{match.hand|int}}, mostly capes, river mouths and the cities of the far east, are my own coordinates for the editors' identification. In all {{match.high|int}} places ({{match.high_pct|int}}%) are high confidence. Spellings were compared on a skeleton that ignores Greek and Latin spelling and German transliteration. Because Ptolemy's errors are smooth, a wrong match stands out as a place displaced unlike its neighbours: I dropped {{match.dropped_dev|int}} single-name matches that departed from their neighbours by more than 300 km, inspected every other outlier by hand and rejected {{match.rejected|int}}; {{match.ambiguous|int}} more were left out as ambiguous.</p>
+<p><b>Fitting.</b> Errors are great-circle distances between the real place and where a transform of Ptolemy's coordinates puts it. As written, aligned on Alexandria, the median error is {{fit.f0.median_km|int}} km. Shrinking longitudes by a fitted factor and shifting both axes (three numbers) brings it to {{fit.f1.median_km|int}} km; a general affine transform (six numbers) to {{fit.f2.median_km|int}} km; a rotation and one scale (a Helmert transform) to {{fit.f3.median_km|int}} km; fitting the shrink and shift separately for each regional map, to {{fit.f4.median_km|int}} km. That the simple three-number fit does as well as the affine and Helmert transforms says the main error really is a stretch in longitude. On that fit Ptolemy's zero of longitude falls at {{fit.prime_meridian_w|f1}} degrees west, about where the eastern Canary Islands are.</p>
+<p><b>What this is not.</b> The matched places are not a random sample: they are the places scholars have identified, so they favour the Roman Mediterranean ({{match.europe|int}} in Europe, {{match.africa|int}} in Africa, {{match.asia|int}} in Asia, only {{match.india_east|int}} east of 60 degrees east). Figures for India, Arabia, Central Asia and China rest on few places and on identifications that are themselves debated, Kattigara and Sera above all. Some coastlines, river mouths and harbours have moved since antiquity; the mouths of the Nile delta, the Meander and the Tigris are the obvious cases, and I located few of them. The Ptolemaic coasts on the left map are his coastal points joined in the order he lists them, not his own drawing. My hand coordinates are good to a few kilometres, far finer than the errors measured, but they follow the editors' identifications, which are scholarship, not certainty.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>Grasshoff, G. and Defaux, O. (2019) Catalog of Ptolemy's Geography, main books. Zenodo, doi:10.5281/zenodo.3585758. CC BY 4.0.</li>
+<li>Pleiades: a gazetteer of past places, version {{meta.pleiades_version|raw}}, CC BY 3.0.</li>
+<li>Digital Atlas of the Roman Empire (DARE), J. Ahlfeldt, Lund University, as packaged in the Roman Empire vector map by Klokan Technologies. CC BY-SA.</li>
+<li>Natural Earth outlines and towns (public domain). Optional shaded relief tiles © Esri.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23882603">Read the paper</a><a href="https://github.com/Tristan-Hotham/ptolemy">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/ptolemy/">Blog post</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Ptolemy's world, measured: the coordinates of the Geography set against a modern map. Zenodo. <a href="https://doi.org/10.5281/zenodo.23882603">https://doi.org/10.5281/zenodo.23882603</a></p>
+<p>Licence: code MIT; text, figures and derived data CC BY 4.0. The catalogue is CC BY 4.0 (Grasshoff and Defaux); Pleiades data CC BY 3.0; DARE CC BY-SA.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const R = /*RESULTS*/;
+const SITE = /*SITE*/;
+const WORLD = /*WORLD*/;
+const fmt = n => n == null || n === "" ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("click", e => { if (!e.target.closest("svg")) hideTip(); });
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const small = () => innerWidth < 860;
+const C = {}; SITE.cols.forEach((k, i) => C[k] = i);
+const O = {}; SITE.other_cols.forEach((k, i) => O[k] = i);
+const PL = SITE.places, OTH = SITE.other, MAPN = SITE.maps.map(m => m[1]), MAPK = SITE.maps.map(m => m[0]);
+const byId = {}; PL.forEach((r, i) => byId[r[C.id]] = i);
+const FIT = SITE.fit, D2R = Math.PI / 180, K36 = Math.cos(36 * D2R);
+const CONTV = ["--eu", "--af", "--as"], ERRV = ["--e1", "--e2", "--e3", "--e4", "--e5"], ERRB = [100, 250, 500, 1000];
+const ERRL = ["under 100 km", "100 to 250 km", "250 to 500 km", "500 to 1,000 km", "over 1,000 km"];
+const errClass = km => km < 100 ? 0 : km < 250 ? 1 : km < 500 ? 2 : km < 1000 ? 3 : 4;
+const dm = v => { if (v == null) return "n/a"; const s = v < 0 ? "-" : "", a = Math.abs(v), d = Math.floor(a + 1e-9), m = Math.round((a - d) * 60); return `${s}${m === 60 ? d + 1 : d}°${m === 60 ? "" : m ? " " + m + "′" : ""}`; };
+
+/* hero mark: Ptolemy's first projection, a fan of meridians and arcs of parallels */
+(function () {
+  const g = document.getElementById("heroMark"), cx = 60, cy = -40;
+  for (let k = 0; k < 4; k++) { const r = 70 + k * 18; const a0 = -0.62, a1 = 0.62; el("path", { d: `M${cx + r * Math.sin(a0)} ${cy + r * Math.cos(a0)} A${r} ${r} 0 0 1 ${cx + r * Math.sin(a1)} ${cy + r * Math.cos(a1)}`.replace("A", "A").replace(" 0 0 1 ", " 0 0 0 "), fill: "none", stroke: "currentColor", "stroke-width": k === 1 ? 3 : 1.6 }, g); }
+  for (let j = -3; j <= 3; j++) { const a = j * 0.2; el("line", { x1: cx + 70 * Math.sin(a), y1: cy + 70 * Math.cos(a), x2: cx + 124 * Math.sin(a), y2: cy + 124 * Math.cos(a), stroke: "currentColor", "stroke-width": 1.2 }, g); }
+  el("circle", { cx: cx + 106 * Math.sin(-0.05), cy: cy + 106 * Math.cos(-0.05), r: 5.5, fill: "#B23A2A" }, g);
+  el("circle", { cx: cx + 88 * Math.sin(0.45), cy: cy + 88 * Math.cos(0.45), r: 3.5, fill: "#2F5FA7" }, g);
+  el("circle", { cx: cx + 112 * Math.sin(-0.5), cy: cy + 112 * Math.cos(-0.5), r: 3.5, fill: "#B07A12" }, g);
+})();
+
+/* ---------- state ---------- */
+const S = { col: "err", sel: null };
+let FB = null;
+const LYDEF = { pcoast: true, grid: true, other: false, xi: false, realp: false, arrows: false, ptolw: false, wplaces: true, relief: false, reliefK: 35 };
+const LY = { ...LYDEF };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("pt_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("pt_layers", JSON.stringify(LY)); } catch (e) {} };
+
+/* Ptolemy's degrees -> pseudo coordinates on Web Mercator, so that the screen shows his grid with the Rhodes aspect */
+const p2ll = (lo, la) => [(lo - 90) * K36, (2 * Math.atan(Math.exp(la * D2R)) - Math.PI / 2) / D2R];
+const PB = [p2ll(-2, -22), p2ll(182, 66)];
+/* the stretch fit, both ways */
+const fitP = (lo, la) => [FIT.a + FIT.b * lo, la + FIT.c];
+const unfit = (lon, lat) => [(lon - FIT.a) / FIT.b, lat - FIT.c];
+
+function pal() { const d = isDark(); return { sea: css("--sea"), land: css("--land"), border: d ? "#3A3830" : "#FFFFFF", ink: css("--fg"), panel: css("--panel"), ptol: css("--ptol"), muted: css("--muted"), rule: css("--rule") }; }
+const colOf = r => S.col === "cont" ? css(CONTV[r[C.cont]]) : css(ERRV[errClass(r[C.f1_km])]);
+const colExpr = () => S.col === "cont" ? ["match", ["get", "c"], 0, css(CONTV[0]), 1, css(CONTV[1]), 2, css(CONTV[2]), "#888"] : ["match", ["get", "e"], 0, css(ERRV[0]), 1, css(ERRV[1]), 2, css(ERRV[2]), 3, css(ERRV[3]), 4, css(ERRV[4]), "#888"];
+const FC = f => ({ type: "FeatureCollection", features: f });
+function placeFeatures(mode) {
+  return FC(PL.map((r, i) => { let c;
+    if (mode === "ptol") c = p2ll(r[C.lon_o], r[C.lat_o]); else if (mode === "real") c = [r[C.lon], r[C.lat]]; else if (mode === "realP") { const u = unfit(r[C.lon], r[C.lat]); c = p2ll(u[0], u[1]); }
+    return { type: "Feature", id: i, properties: { i, c: r[C.cont], e: errClass(r[C.f1_km]), h: r[C.high] }, geometry: { type: "Point", coordinates: c } }; }));
+}
+function otherFeatures() { return FC(OTH.filter(r => r[O.lon_o] != null).map((r, i) => ({ type: "Feature", properties: { j: i }, geometry: { type: "Point", coordinates: p2ll(r[O.lon_o], r[O.lat_o]) } }))); }
+function xiFeatures() { const f = []; PL.forEach(r => { if (r[C.lon_x] == null) return; if (r[C.lon_x] === r[C.lon_o] && r[C.lat_x] === r[C.lat_o]) return;
+  f.push({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: [p2ll(r[C.lon_o], r[C.lat_o]), p2ll(r[C.lon_x], r[C.lat_x])] } }); f.push({ type: "Feature", properties: { pt: 1 }, geometry: { type: "Point", coordinates: p2ll(r[C.lon_x], r[C.lat_x]) } }); }); return FC(f); }
+function coastFeatures(where) { return FC(SITE.coasts.map(s => ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: s.pts.map(p => where === "ptol" ? p2ll(p[0], p[1]) : fitP(p[0], p[1])) } }))); }
+function gridFeatures() { const f = [];
+  for (let lo = 0; lo <= 180; lo += 10) f.push({ type: "Feature", properties: { k: lo % 30 === 0 ? 1 : 0 }, geometry: { type: "LineString", coordinates: [-20, 0, 20, 40, 64].map(la => p2ll(lo, la)) } });
+  for (let la = -20; la <= 60; la += 10) f.push({ type: "Feature", properties: { k: la === 0 ? 1 : 0 }, geometry: { type: "LineString", coordinates: [0, 60, 120, 180].map(lo => p2ll(lo, la)) } });
+  f.push({ type: "Feature", properties: { k: 2 }, geometry: { type: "LineString", coordinates: [0, 60, 120, 180].map(lo => p2ll(lo, 36)) } });
+  f.push({ type: "Feature", properties: { k: 2 }, geometry: { type: "LineString", coordinates: [0, 60, 120, 180].map(lo => p2ll(lo, 63)) } });
+  return FC(f); }
+function gridLabels() { return FC([[0, "equator"], [36, "Rhodes 36°"], [63, "Thule 63°"]].map(([la, t]) => ({ type: "Feature", properties: { t }, geometry: { type: "Point", coordinates: p2ll(178, la + 1.2) } }))
+  .concat([0, 60, 120, 180].map(lo => ({ type: "Feature", properties: { t: lo + "°" }, geometry: { type: "Point", coordinates: p2ll(lo + 1.5, -18) } })))); }
+function realCoastInPtol() { /* the real coastlines carried into Ptolemy's degrees by inverting the stretch fit */
+  const f = []; WORLD.features.forEach(ft => { const g = ft.geometry, polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+    polys.forEach(pg => { const ring = pg[0]; if (!ring.some(c => c[0] > -25 && c[0] < 125 && c[1] > -25 && c[1] < 66)) return;
+      f.push({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ring.map(c => { const u = unfit(c[0], c[1]); return p2ll(u[0], u[1]); }) } }); }); }); return FC(f); }
+function arrowFeatures() { return FC(PL.map(r => ({ type: "Feature", properties: { e: errClass(r[C.f1_km]), c: r[C.cont] }, geometry: { type: "LineString", coordinates: [[r[C.lon], r[C.lat]], [r[C.f1_lon], r[C.f1_lat]]] } }))); }
+
+/* ---------- the two maps ---------- */
+let pm = null, wm = null, pReady = false, wReady = false, pins = [];
+function startMaps() {
+  if (typeof maplibregl === "undefined") { fallback(); return; }
+  const P = pal();
+  try {
+    pm = new maplibregl.Map({ container: "pmap", bounds: PB, fitBoundsOptions: { padding: 4 }, maxBounds: [[PB[0][0] - 60, -80], [PB[1][0] + 60, 80]],
+      minZoom: -1.5, maxZoom: 8, renderWorldCopies: false, attributionControl: { compact: true, customAttribution: "Coordinates: Grasshoff and Defaux 2019 (CC BY 4.0)" }, dragRotate: false, pitchWithRotate: false, fadeDuration: 0,
+      style: { version: 8, sources: { grid: { type: "geojson", data: gridFeatures() }, coast: { type: "geojson", data: coastFeatures("ptol") }, realc: { type: "geojson", data: realCoastInPtol() },
+          oth: { type: "geojson", data: otherFeatures() }, xi: { type: "geojson", data: xiFeatures() }, pts: { type: "geojson", data: placeFeatures("ptol") }, rp: { type: "geojson", data: placeFeatures("realP") },
+          sel: { type: "geojson", data: FC([]) } },
+        layers: [{ id: "bg", type: "background", paint: { "background-color": P.panel } },
+          { id: "grid", type: "line", source: "grid", paint: { "line-color": ["match", ["get", "k"], 2, P.ptol, P.muted], "line-width": ["match", ["get", "k"], 0, .5, 1], "line-opacity": ["match", ["get", "k"], 2, .55, 0, .35, .6], "line-dasharray": [2, 2] } },
+          { id: "realc", type: "line", source: "realc", layout: { visibility: "none" }, paint: { "line-color": P.muted, "line-width": .8, "line-opacity": .7 } },
+          { id: "coast", type: "line", source: "coast", layout: { "line-join": "round" }, paint: { "line-color": P.ptol, "line-width": 1.6, "line-opacity": .85 } },
+          { id: "oth", type: "circle", source: "oth", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 1.2, 5, 3], "circle-color": P.muted, "circle-opacity": .5 } },
+          { id: "xi", type: "line", source: "xi", layout: { visibility: "none" }, filter: ["==", ["geometry-type"], "LineString"], paint: { "line-color": P.ink, "line-width": 1, "line-opacity": .6 } },
+          { id: "xip", type: "circle", source: "xi", layout: { visibility: "none" }, filter: ["==", ["geometry-type"], "Point"], paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 1.6, 5, 4], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": P.ink, "circle-stroke-width": 1 } },
+          { id: "rp", type: "circle", source: "rp", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 1.5, 5, 4], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": P.muted, "circle-stroke-width": 1 } },
+          { id: "pts", type: "circle", source: "pts", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 2.4, 3, 4.5, 7, 8], "circle-color": colExpr(), "circle-stroke-color": "#FFFFFF", "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 0, .4, 4, 1.2], "circle-opacity": .92 } },
+          { id: "sel", type: "circle", source: "sel", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 8, 5, 14], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#B23A2A", "circle-stroke-width": 3 } }] } });
+    pm.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    pm.on("error", e => console.warn("pm", e && e.error && e.error.message));
+    pm.on("load", () => { pReady = true; pm.fitBounds(PB, { padding: 6, duration: 0 }); document.querySelector("#pmap .loading")?.remove(); applyLayers(); bindClicks(pm); drawSel(); gridText(); });
+    wm = new maplibregl.Map({ container: "wmap", center: small() ? [40, 28] : [44, 30], zoom: small() ? .7 : 1.25, minZoom: .4, maxZoom: 9, renderWorldCopies: false, attributionControl: { compact: true }, dragRotate: false, pitchWithRotate: false, fadeDuration: 0,
+      style: { version: 8, sources: { world: { type: "geojson", data: WORLD, attribution: "Natural Earth" },
+          relief: { type: "raster", tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"], tileSize: 256, maxzoom: 13, attribution: "Relief: Esri" },
+          pc: { type: "geojson", data: coastFeatures("real") }, arr: { type: "geojson", data: arrowFeatures() }, pts: { type: "geojson", data: placeFeatures("real"), attribution: "Pleiades (CC BY 3.0); DARE (CC BY-SA)" }, sel: { type: "geojson", data: FC([]) } },
+        layers: [{ id: "bg", type: "background", paint: { "background-color": P.sea } },
+          { id: "land", type: "fill", source: "world", paint: { "fill-color": P.land } },
+          { id: "relief", type: "raster", source: "relief", layout: { visibility: "none" }, paint: { "raster-opacity": LY.reliefK / 100 } },
+          { id: "borders", type: "line", source: "world", paint: { "line-color": P.border, "line-width": .6 } },
+          { id: "pc", type: "line", source: "pc", layout: { visibility: "none", "line-join": "round" }, paint: { "line-color": P.ptol, "line-width": 1.4, "line-opacity": .85 } },
+          { id: "arr", type: "line", source: "arr", layout: { visibility: "none", "line-cap": "round" }, paint: { "line-color": colExpr(), "line-width": 1, "line-opacity": .7 } },
+          { id: "pts", type: "circle", source: "pts", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 2.2, 3, 4, 7, 8], "circle-color": colExpr(), "circle-stroke-color": "#FFFFFF", "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 0, .4, 4, 1.2] } },
+          { id: "sel", type: "circle", source: "sel", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 8, 5, 14], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#B23A2A", "circle-stroke-width": 3 } }] } });
+    wm.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    wm.on("error", () => { /* offline tiles: the plain base map still works */ });
+    wm.on("load", () => { wReady = true; document.querySelector("#wmap .loading")?.remove(); applyLayers(); bindClicks(wm); drawSel(); });
+    layersControl();
+  } catch (e) { console.warn(e); fallback(); }
+}
+let gridMarks = [];
+function gridText() { gridMarks.forEach(m => m.remove()); gridMarks = []; if (!LY.grid) return;
+  gridLabels().features.forEach(f => { const d = document.createElement("div"); d.style.cssText = `font:500 10px/1 var(--mono);color:${css("--muted")};pointer-events:none;white-space:nowrap`; d.textContent = f.properties.t;
+    gridMarks.push(new maplibregl.Marker({ element: d, anchor: f.properties.t.endsWith("°") && !f.properties.t.includes(" ") && f.properties.t !== "180°" ? "bottom-left" : "bottom-right" }).setLngLat(f.geometry.coordinates).addTo(pm)); }); }
+function bindClicks(map) {
+  map.on("click", "pts", e => { const f = e.features[0]; if (f) select(PL[f.properties.i][C.id], false); });
+  map.on("mouseenter", "pts", () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", "pts", () => map.getCanvas().style.cursor = "");
+}
+function closeAttrib() { document.querySelectorAll(".maplibregl-ctrl-attrib.maplibregl-compact").forEach(a => { a.classList.remove("maplibregl-compact-show"); a.removeAttribute("open"); }); }
+function applyLayers() {
+  closeAttrib();
+  const v = b => b ? "visible" : "none";
+  if (pReady) { pm.setLayoutProperty("coast", "visibility", v(LY.pcoast)); pm.setLayoutProperty("grid", "visibility", v(LY.grid)); pm.setLayoutProperty("oth", "visibility", v(LY.other));
+    pm.setLayoutProperty("xi", "visibility", v(LY.xi)); pm.setLayoutProperty("xip", "visibility", v(LY.xi)); pm.setLayoutProperty("realc", "visibility", v(LY.realp)); pm.setLayoutProperty("rp", "visibility", v(LY.realp)); gridText(); }
+  if (wReady) { wm.setLayoutProperty("arr", "visibility", v(LY.arrows)); wm.setLayoutProperty("pc", "visibility", v(LY.ptolw)); wm.setLayoutProperty("pts", "visibility", v(LY.wplaces));
+    wm.setLayoutProperty("relief", "visibility", v(LY.relief)); wm.setPaintProperty("relief", "raster-opacity", LY.reliefK / 100); }
+  if (FB) FB.draw();
+}
+function recolour() {
+  if (pReady) pm.setPaintProperty("pts", "circle-color", colExpr());
+  if (wReady) { wm.setPaintProperty("pts", "circle-color", colExpr()); wm.setPaintProperty("arr", "line-color", colExpr()); }
+  legend(); if (FB) FB.draw();
+}
+function layersControl() {
+  const mk = (box, html) => { const w = document.createElement("div"); w.className = "lyrWrap";
+    w.innerHTML = `<button class="lyrBtn" aria-expanded="false">Map layers</button><div class="lyrPanel" hidden>${html}<button class="reset">Reset layers</button></div>`;
+    document.getElementById(box).appendChild(w);
+    const b = w.querySelector(".lyrBtn"), p = w.querySelector(".lyrPanel");
+    ["click", "dblclick", "mousedown", "touchstart", "wheel"].forEach(t => w.addEventListener(t, e => e.stopPropagation(), { passive: true }));
+    b.onclick = () => { const o = p.hidden; p.hidden = !o; b.setAttribute("aria-expanded", o); };
+    w.querySelectorAll("input[data-l][type=checkbox]").forEach(i => { i.checked = !!LY[i.dataset.l]; i.onchange = () => { LY[i.dataset.l] = i.checked; saveLY(); syncBoxes(); applyLayers(); }; });
+    w.querySelectorAll("input[data-l][type=range]").forEach(i => { i.value = LY[i.dataset.l]; i.oninput = () => { LY[i.dataset.l] = +i.value; saveLY(); applyLayers(); }; });
+    w.querySelector(".reset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); syncBoxes(); document.querySelectorAll(".lyrPanel input[type=range]").forEach(i => i.value = LY[i.dataset.l]); applyLayers(); };
+  };
+  mk("pmap", `<div class="hd">Ptolemy's map</div><div class="row"><label><input type="checkbox" data-l="pcoast">His coasts</label><div class="sub">coastal points joined in his order</div></div>
+    <div class="row"><label><input type="checkbox" data-l="grid">Grid of his degrees</label><div class="sub">every 10°, with the parallels of Rhodes and Thule</div></div>
+    <div class="row"><label><input type="checkbox" data-l="other">Unmatched entries</label><div class="sub">every other entry with coordinates</div></div>
+    <div class="row"><label><input type="checkbox" data-l="xi">Xi recension</label><div class="sub">line from Omega to Xi where they differ</div></div>
+    <div class="row"><label><input type="checkbox" data-l="realp">The real world, stretched</label><div class="sub">real coasts and places in his degrees (inverse of the ×${FIT.b.toFixed(2)} fit)</div></div>`);
+  mk("wmap", `<div class="hd">Modern map</div><div class="row"><label><input type="checkbox" data-l="wplaces">Matched places</label></div>
+    <div class="row"><label><input type="checkbox" data-l="arrows">Where Ptolemy puts them</label><div class="sub">line to his position, longitudes shrunk by ${FIT.b.toFixed(2)}</div></div>
+    <div class="row"><label><input type="checkbox" data-l="ptolw">His coasts, shrunk to fit</label><div class="sub">his coasts on the modern map, same fit</div></div>
+    <div class="row"><label><input type="checkbox" data-l="relief">Shaded relief (Esri)</label><div class="sub"><span>opacity</span><input type="range" min="10" max="80" data-l="reliefK" aria-label="Relief opacity"></div></div>`);
+}
+function syncBoxes() { document.querySelectorAll(".lyrPanel input[data-l][type=checkbox]").forEach(i => i.checked = !!LY[i.dataset.l]); }
+
+/* ---------- selection ---------- */
+function drawSel() {
+  pins.forEach(p => p.remove()); pins = [];
+  const r = S.sel != null ? PL[byId[S.sel]] : null;
+  if (pReady) pm.getSource("sel").setData(r ? FC([{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: p2ll(r[C.lon_o], r[C.lat_o]) } }]) : FC([]));
+  if (wReady) wm.getSource("sel").setData(r ? FC([{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [r[C.lon], r[C.lat]] } }]) : FC([]));
+  if (!r || typeof maplibregl === "undefined") return;
+  const pin = (map, c, txt) => { const d = document.createElement("div"); d.className = "pinL"; d.textContent = txt; pins.push(new maplibregl.Marker({ element: d, anchor: "bottom", offset: [0, -12] }).setLngLat(c).addTo(map)); };
+  if (pReady) pin(pm, p2ll(r[C.lon_o], r[C.lat_o]), r[C.name]);
+  if (wReady) pin(wm, [r[C.lon], r[C.lat]], r[C.modern]);
+}
+const METHL = { "gaz-both": "ancient and modern names agree in a gazetteer", "gaz-anc": "ancient name, the only match in the region", "gaz-mod": "modern name, the only match in the region", "hand": "my own coordinates for the editors' identification" };
+function side() {
+  const box = document.getElementById("side"); const r = S.sel != null ? PL[byId[S.sel]] : null;
+  if (!r) { box.innerHTML = `<div class="sub">Click a dot on either map, or search above. Each dot is a place in Ptolemy's Geography matched to where it really is.</div>`; return; }
+  const xi = r[C.lon_x] == null ? "not in Xi" : (r[C.lon_x] === r[C.lon_o] && r[C.lat_x] === r[C.lat_o]) ? "the same in Xi" : `Xi: ${dm(r[C.lon_x])} E, ${dm(r[C.lat_x])} N`;
+  box.innerHTML = `<div class="sub"><span class="chip" style="background:${colOf(r)}"></span>${esc(r[C.region])} · ${esc(MAPN[r[C.map]])} · Geography ${esc(r[C.id])}</div><div class="big">${esc(r[C.name])}</div>
+    <table><tr><td>Today</td><td>${esc(r[C.modern])}${r[C.near] ? " (near)" : ""}</td></tr>
+    <tr><td>Ptolemy</td><td>${dm(r[C.lon_o])} east of the Fortunate Isles, ${dm(r[C.lat_o])} north; ${xi}</td></tr>
+    <tr><td>Real place</td><td>${r[C.lon].toFixed(2)}° ${r[C.lon] < 0 ? "W" : "E"}, ${r[C.lat].toFixed(2)}° ${r[C.lat] < 0 ? "S" : "N"}</td></tr>
+    <tr><td>Error</td><td>${fmt(r[C.f1_km])} km after shrinking his longitudes; ${fmt(r[C.f0_km])} km as written</td></tr>
+    <tr><td>Matched by</td><td>${METHL[SITE.methods[r[C.meth]]]} (${r[C.high] ? "high" : "medium"} confidence)${r[C.gaz] ? ": " + esc(r[C.gaz]) : ""}</td></tr></table>`;
+}
+function select(id, move = true) {
+  if (byId[id] == null) return; S.sel = id; const r = PL[byId[id]];
+  drawSel(); side();
+  if (pReady) pm.flyTo({ center: p2ll(r[C.lon_o], r[C.lat_o]), zoom: Math.max(pm.getZoom(), 3.2), duration: 800 });
+  if (wReady) wm.flyTo({ center: [r[C.lon], r[C.lat]], zoom: Math.max(wm.getZoom(), 3.6), duration: 800 });
+  if (FB) FB.draw();
+  if (move && small()) document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+window.select = select;
+function fitBoth(ptolBox, realBox) { if (pReady) pm.fitBounds([p2ll(ptolBox[0], ptolBox[1]), p2ll(ptolBox[2], ptolBox[3])], { padding: 18, duration: 800 }); if (wReady) wm.fitBounds([[realBox[0], realBox[1]], [realBox[2], realBox[3]]], { padding: 18, duration: 800 }); }
+function boxOf(rows) { const lo = rows.map(r => r[C.lon_o]), la = rows.map(r => r[C.lat_o]), x = rows.map(r => r[C.lon]), y = rows.map(r => r[C.lat]);
+  return [[Math.min(...lo), Math.min(...la), Math.max(...lo), Math.max(...la)], [Math.min(...x), Math.min(...y), Math.max(...x), Math.max(...y)]]; }
+
+/* ---------- controls ---------- */
+function legend() {
+  const lg = document.getElementById("legend");
+  const items = S.col === "cont" ? SITE.conts.map((c, i) => `<span><i style="background:var(${CONTV[i]})"></i>${c}</span>`) : ERRL.map((t, i) => `<span><i style="background:var(${ERRV[i]})"></i>${t}</span>`);
+  lg.innerHTML = (S.col === "err" ? `<span>Error after shrinking longitudes:</span>` : "") + items.join("") + `<span><i class="ln" style="border-color:var(--ptol)"></i>Ptolemy's coasts</span><span><i style="background:transparent;border:2px solid var(--red)"></i>Selected place</span>`;
+}
+(function colRow() {
+  const row = document.getElementById("colRow");
+  [["err", "Error"], ["cont", "Continent"]].forEach(([k, t]) => { const b = document.createElement("button"); b.className = "btn"; b.dataset.c = k; b.textContent = t; row.appendChild(b);
+    b.onclick = () => { S.col = k; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x.dataset.c === S.col)); recolour(); }; });
+  row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x.dataset.c === S.col)); legend();
+})();
+const FOCUS = [["Whole world", null], ["Mediterranean", [[0, 28, 75, 48], [-10, 29, 37, 46]]], ["Britain", "EU01"], ["Egypt", "AF03"], ["India", "AS10"], ["Taprobane", [[115, -6, 136, 14], [77, 3, 84, 12]]],
+  ["Caspian", [[76, 36, 102, 51], [44, 35, 63, 49]]], ["Far east", [[150, -12, 180, 42], [85, 5, 115, 42]]]];
+(function focusRow() {
+  const row = document.getElementById("focusRow");
+  FOCUS.forEach(([n, f]) => { const x = document.createElement("button"); x.className = "btn"; x.textContent = n; row.appendChild(x);
+    x.onclick = () => { S.sel = null; drawSel(); side();
+      if (!f) { if (pReady) pm.fitBounds(PB, { padding: 4, duration: 800 }); if (wReady) wm.flyTo({ center: small() ? [40, 28] : [44, 30], zoom: small() ? .7 : 1.25, duration: 800 }); }
+      else if (typeof f === "string") { const b = boxOf(PL.filter(r => MAPK[r[C.map]] === f)); fitBoth(b[0], b[1]); }
+      else fitBoth(f[0], f[1]);
+      if (FB) FB.draw(); }; });
+})();
+(function search() {
+  const q = document.getElementById("q"), sug = document.getElementById("sug");
+  const IDX = PL.map(r => ({ id: r[C.id], t: r[C.name], s: r[C.modern] + " · " + MAPN[r[C.map]], h: (r[C.name] + " " + r[C.modern] + " " + r[C.gaz] + " " + r[C.region]).toLowerCase() }));
+  let cur = [], ai = -1;
+  const show = () => { sug.innerHTML = cur.map((c, i) => `<li role="option" aria-selected="${i === ai}" data-i="${i}">${esc(c.t)} <span>${esc(c.s)}</span></li>`).join(""); sug.style.display = cur.length ? "block" : "none";
+    sug.querySelectorAll("li").forEach(li => li.onmousedown = e => { e.preventDefault(); pick(cur[+li.dataset.i]); }); };
+  const pick = c => { if (!c) return; q.value = c.t; sug.style.display = "none"; select(c.id); };
+  q.addEventListener("input", () => { const v = q.value.trim().toLowerCase(); ai = -1; if (v.length < 2) { cur = []; show(); return; }
+    cur = IDX.filter(x => x.h.includes(v)).sort((a, b) => (a.t.toLowerCase().startsWith(v) ? 0 : 1) - (b.t.toLowerCase().startsWith(v) ? 0 : 1)).slice(0, 12); show(); });
+  q.addEventListener("keydown", e => { if (e.key === "ArrowDown") { ai = Math.min(cur.length - 1, ai + 1); show(); e.preventDefault(); } else if (e.key === "ArrowUp") { ai = Math.max(0, ai - 1); show(); e.preventDefault(); }
+    else if (e.key === "Enter") { pick(cur[ai >= 0 ? ai : 0]); } else if (e.key === "Escape") { sug.style.display = "none"; } });
+  q.addEventListener("blur", () => setTimeout(() => sug.style.display = "none", 150));
+})();
+
+/* ---------- fallback: no map library ---------- */
+function fallback() {
+  const pbox = document.getElementById("pmap"), wbox = document.getElementById("wmap");
+  [pbox, wbox].forEach(b => b.querySelector(".loading")?.remove());
+  const mk = (box, note) => { const cv = document.createElement("canvas"); cv.className = "fallback"; box.appendChild(cv); const n = document.createElement("div"); n.className = "fbnote"; n.textContent = note; box.appendChild(n); return cv; };
+  const pc = mk(pbox, "The map library did not load, so this is a still view of Ptolemy's coordinates. Click a dot to select a place."), wc = mk(wbox, "Still view of the modern map (Natural Earth). Click a dot to select a place.");
+  const PG = { x0: -2, x1: 182, y0: -22, y1: 66 }, WG = { x0: -20, x1: 125, y0: -22, y1: 64 };
+  let pT = null, wT = null;
+  const frame = (box, g, k0) => { const W = box.clientWidth, H = box.clientHeight, gw = (g.x1 - g.x0) * k0, gh = g.y1 - g.y0, k = Math.min(W / gw, H / gh); return { W, H, k, kx: k * k0, ox: (W - gw * k) / 2, oy: (H - gh * k) / 2, g }; };
+  const P = (T, x, y) => [T.ox + (x - T.g.x0) * T.kx, T.oy + (T.g.y1 - y) * T.k];
+  const draw = () => { const d = devicePixelRatio || 1;
+    { pT = frame(pbox, PG, K36); pc.width = pT.W * d; pc.height = pT.H * d; const x = pc.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0); x.fillStyle = css("--panel"); x.fillRect(0, 0, pT.W, pT.H);
+      if (LY.grid) { x.strokeStyle = css("--rule"); x.lineWidth = 1; for (let lo = 0; lo <= 180; lo += 10) { const a = P(pT, lo, -20), b = P(pT, lo, 64); x.beginPath(); x.moveTo(...a); x.lineTo(...b); x.stroke(); }
+        for (let la = -20; la <= 60; la += 10) { const a = P(pT, 0, la), b = P(pT, 180, la); x.beginPath(); x.moveTo(...a); x.lineTo(...b); x.stroke(); } }
+      if (LY.pcoast) { x.strokeStyle = css("--ptol"); x.lineWidth = 1.2; SITE.coasts.forEach(s => { x.beginPath(); s.pts.forEach((p, j) => { const [a, b] = P(pT, p[0], p[1]); j ? x.lineTo(a, b) : x.moveTo(a, b); }); x.stroke(); }); }
+      PL.forEach(r => { const [a, b] = P(pT, r[C.lon_o], r[C.lat_o]); x.beginPath(); x.arc(a, b, r[C.id] === S.sel ? 6 : 2.4, 0, 7); x.fillStyle = colOf(r); x.fill(); if (r[C.id] === S.sel) { x.strokeStyle = "#B23A2A"; x.lineWidth = 3; x.stroke(); } }); }
+    { wT = frame(wbox, WG, Math.cos(30 * D2R)); wc.width = wT.W * d; wc.height = wT.H * d; const x = wc.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0); x.fillStyle = css("--sea"); x.fillRect(0, 0, wT.W, wT.H); x.fillStyle = css("--land");
+      WORLD.features.forEach(f => { const g = f.geometry, polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates; polys.forEach(pg => { x.beginPath(); pg[0].forEach((c, j) => { const [a, b] = P(wT, c[0], c[1]); j ? x.lineTo(a, b) : x.moveTo(a, b); }); x.fill(); }); });
+      if (LY.ptolw) { x.strokeStyle = css("--ptol"); x.lineWidth = 1.1; SITE.coasts.forEach(s => { x.beginPath(); s.pts.forEach((p, j) => { const q = fitP(p[0], p[1]); const [a, b] = P(wT, q[0], q[1]); j ? x.lineTo(a, b) : x.moveTo(a, b); }); x.stroke(); }); }
+      PL.forEach(r => { const [a, b] = P(wT, r[C.lon], r[C.lat]); x.beginPath(); x.arc(a, b, r[C.id] === S.sel ? 6 : 2.4, 0, 7); x.fillStyle = colOf(r); x.fill(); if (r[C.id] === S.sel) { x.strokeStyle = "#B23A2A"; x.lineWidth = 3; x.stroke(); } }); }
+  };
+  const hit = (e, box, ptol) => { const T = ptol ? pT : wT, b = box.getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top; let best = null, bd = 12;
+    PL.forEach(r => { const [px, py] = ptol ? P(T, r[C.lon_o], r[C.lat_o]) : P(T, r[C.lon], r[C.lat]); const dd = Math.hypot(px - mx, py - my); if (dd < bd) { bd = dd; best = r[C.id]; } }); if (best != null) select(best, false); };
+  pc.addEventListener("click", e => hit(e, pbox, true)); wc.addEventListener("click", e => hit(e, wbox, false));
+  draw(); new ResizeObserver(draw).observe(pbox); new ResizeObserver(draw).observe(wbox); redraws.push(draw);
+  FB = { draw };
+}
+
+/* ---------- charts ---------- */
+const CN = SITE.conts;
+function contLegend(id) { document.getElementById(id).innerHTML = CN.map((c, i) => `<span><i style="background:var(${CONTV[i]})"></i>${c}</span>`).join(""); }
+function dot(svg, x, y, r, fill, row, html) { const c = el("circle", { cx: x, cy: y, r, fill, "fill-opacity": .8, stroke: css("--card"), "stroke-width": .6 }, svg);
+  c.addEventListener("mousemove", e => showTip(html, e.clientX, e.clientY)); c.addEventListener("mouseleave", hideTip); if (row) { c.style.cursor = "pointer"; c.addEventListener("click", () => select(row[C.id])); } return c; }
+function stretchChart() {
+  const box = document.getElementById("stretchChart");
+  resp(box, (W, sm) => { const H = Math.min(440, W * .75), ml = 46, mb = 36, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Ptolemy's longitude difference from Alexandria against the real one" }, box);
+    const x0 = -50, x1 = 85, y0 = -70, y1 = 125, x = v => ml + (v - x0) / (x1 - x0) * (W - ml - 10), y = v => H - mb - (v - y0) / (y1 - y0) * (H - mb - 8);
+    [-40, -20, 0, 20, 40, 60, 80].forEach(v => { el("line", { x1: x(v), x2: x(v), y1: y(y0), y2: y(y1), stroke: css("--rule") }, svg); lbl(svg, x(v), H - 18, v + "°", "lab s m", "middle"); });
+    [-60, -30, 0, 30, 60, 90, 120].forEach(v => { el("line", { x1: x(x0), x2: x(x1), y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, ml - 6, y(v) + 4, v + "°", "lab s m", "end"); });
+    el("line", { x1: x(-50), y1: y(-50), x2: x(85), y2: y(85), stroke: css("--muted"), "stroke-dasharray": "4 4" }, svg);
+    const s = R.stretch.slope_alex; el("line", { x1: x(-50), y1: y(-50 * s), x2: x(85), y2: y(85 * s), stroke: css("--fg"), "stroke-width": 1.5 }, svg);
+    lbl(svg, x(sm ? 30 : 48), y(sm ? 30 * s : 48 * s) - 10, `Ptolemy: ×${s.toFixed(2)}`, "lab b", "end"); lbl(svg, x(70), y(70) + 18, "a true map", "lab s m", "middle");
+    lbl(svg, (ml + W) / 2, H - 2, "real longitude east of Alexandria (degrees)", "lab s m", "middle");
+    const t = lbl(svg, 12, y(30), "Ptolemy's longitude east of Alexandria", "lab s m", "middle"); t.setAttribute("transform", `rotate(-90 12 ${y(30)})`);
+    PL.forEach(r => { const a = r[C.lon] - SITE.alex[1], b = r[C.lon_o] - 60.5; if (a < x0 || a > x1 || b < y0 || b > y1) return;
+      dot(svg, x(a), y(b), sm ? 2.4 : 3, css(CONTV[r[C.cont]]), r, `<b>${esc(r[C.name])}</b> · ${esc(r[C.modern])}<br>real ${a.toFixed(1)}°, Ptolemy ${b.toFixed(1)}° from Alexandria`); }); });
+  contLegend("contLegend");
+}
+function alexChart() {
+  const box = document.getElementById("alexChart"); const D = R.alex_bins;
+  resp(box, (W, sm) => { const H = 300, ml = 52, mb = 46, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Median error by distance from Alexandria" }, box);
+    const mx = Math.max(...D.map(d => d.f0_km)) * 1.1, bw = (W - ml - 10) / D.length, y = v => H - mb - v / mx * (H - mb - 14);
+    [0, 500, 1000, 1500].filter(v => v < mx).forEach(v => { el("line", { x1: ml, x2: W - 10, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, ml - 6, y(v) + 4, fmt(v), "lab s m", "end"); });
+    D.forEach((d, i) => { const x = ml + i * bw;
+      [["f0_km", css("--red"), "as written"], ["f1_km", css("--eu"), "longitudes shrunk"]].forEach(([k, c, n], j) => { const w = bw * .36, rx = x + bw * .12 + j * w;
+        const rr = el("rect", { x: rx, y: y(d[k]), width: w - 3, height: y(0) - y(d[k]), fill: c, "fill-opacity": .88 }, svg);
+        rr.addEventListener("mousemove", e => showTip(`<b>${d.hi > 9000 ? "over " + fmt(d.lo) : fmt(d.lo) + " to " + fmt(d.hi)} km from Alexandria</b><br>${d.n} places; median error ${n}: ${fmt(d[k])} km`, e.clientX, e.clientY)); rr.addEventListener("mouseleave", hideTip);
+        if (!sm || j === 0) lbl(svg, rx + (w - 3) / 2, y(d[k]) - 5, fmt(d[k]), "lab s", "middle"); });
+      lbl(svg, x + bw / 2, H - 28, d.hi > 9000 ? `> ${fmt(d.lo)}` : `${fmt(d.lo)}-${fmt(d.hi)}`, "lab s m", "middle"); lbl(svg, x + bw / 2, H - 15, `n ${d.n}`, "lab s m", "middle"); });
+    lbl(svg, (ml + W) / 2, H - 1, "distance from Alexandria (km)", "lab s m", "middle"); });
+  document.getElementById("alexLegend").innerHTML = `<span><i class="sq" style="background:var(--red)"></i>As written, aligned on Alexandria</span><span><i class="sq" style="background:var(--eu)"></i>Longitudes shrunk by ${FIT.b.toFixed(2)}</span>`;
+}
+/* paired shape charts: Ptolemy's frame on the left, the real world on the right, same km scale */
+function twinChart(id, rows, opt) {
+  const box = document.getElementById(id);
+  const px = r => [r[C.lon_o] * FIT.b * Math.cos(r[C.lat_o] * D2R) * 111.2, r[C.lat_o] * 111.2];
+  const rx = (lon, lat) => [lon * Math.cos(lat * D2R) * 111.2, lat * 111.2];
+  resp(box, (W, sm) => {
+    const gap = 16, pw = sm ? W : (W - gap) / 2, ph = sm ? W * .95 : Math.min(460, pw * 1.15), H = sm ? ph * 2 + 40 : ph + 24;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opt.aria }, box);
+    const A = rows.map(px), B = rows.map(r => rx(r[C.lon], r[C.lat]));
+    const extA = (opt.extraP || []).map(p => [p[0] * FIT.b * Math.cos(p[1] * D2R) * 111.2, p[1] * 111.2]);
+    const span = pts => { const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]); return [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]; };
+    const sa = span(A.concat(extA)), sb = span(B.concat(opt.realPts || []));
+    const k = Math.min((pw - 40) / Math.max(sa[1] - sa[0], sb[1] - sb[0]), (ph - 48) / Math.max(sa[3] - sa[2], sb[3] - sb[2]));
+    const proj = (s, ox, oy) => p => [ox + 20 + (p[0] - s[0]) * k + ((pw - 40) - (s[1] - s[0]) * k) / 2, oy + 34 + (s[3] - p[1]) * k + ((ph - 48) - (s[3] - s[2]) * k) / 2];
+    const fa = proj(sa, 0, 0), fb = sm ? proj(sb, 0, ph + 40) : proj(sb, pw + gap, 0);
+    el("rect", { x: 0, y: 16, width: pw, height: ph - 14, fill: css("--panel"), stroke: css("--rule") }, svg);
+    el("rect", { x: sm ? 0 : pw + gap, y: (sm ? ph + 40 : 0) + 16, width: pw, height: ph - 14, fill: css("--sea"), stroke: css("--rule") }, svg);
+    lbl(svg, 4, 11, opt.left || "Ptolemy's coordinates", "lab b"); lbl(svg, (sm ? 0 : pw + gap) + 4, (sm ? ph + 40 : 0) + 11, opt.right || "Reality", "lab b");
+    // real land, clipped by the chart box
+    const ox = sm ? 0 : pw + gap, oy = sm ? ph + 40 : 0, cid = id + "clip";
+    const cp = el("clipPath", { id: cid }, el("defs", {}, svg)); el("rect", { x: ox, y: oy + 16, width: pw, height: ph - 14 }, cp);
+    const gl = el("g", { "clip-path": `url(#${cid})` }, svg);
+    WORLD.features.forEach(f => { const g = f.geometry, polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+      polys.forEach(pg => { const ring = pg[0]; if (!ring.some(c => c[0] > opt.realBox[0] && c[0] < opt.realBox[2] && c[1] > opt.realBox[1] && c[1] < opt.realBox[3])) return;
+        el("path", { d: "M" + ring.map(c => fb(rx(c[0], c[1])).map(v => v.toFixed(1)).join(" ")).join("L") + "Z", fill: css("--land"), stroke: css("--card"), "stroke-width": .5 }, gl); }); });
+    if (opt.realPoly) el("path", { d: "M" + opt.realPoly.map(c => fb(rx(c[0], c[1])).map(v => v.toFixed(1)).join(" ")).join("L") + "Z", fill: css("--sea"), stroke: css("--muted"), "stroke-width": .8 }, gl);
+    if (opt.ptolLine) el("path", { d: "M" + opt.ptolLine.map(p => fa([p[0] * FIT.b * Math.cos(p[1] * D2R) * 111.2, p[1] * 111.2]).map(v => v.toFixed(1)).join(" ")).join("L") + (opt.closeLine ? "Z" : ""), fill: opt.closeLine ? css("--land") : "none", stroke: css("--ptol"), "stroke-width": 1.4 }, svg);
+    if (opt.coasts) opt.coasts.forEach(s => el("path", { d: "M" + s.map(p => fa([p[0] * FIT.b * Math.cos(p[1] * D2R) * 111.2, p[1] * 111.2]).map(v => v.toFixed(1)).join(" ")).join("L"), fill: "none", stroke: css("--ptol"), "stroke-width": 1.2, "stroke-opacity": .8 }, svg));
+    const lat0 = Math.min(...rows.map(r => r[C.lat])), lat1 = Math.max(...rows.map(r => r[C.lat]));
+    const col = r => opt.colour ? opt.colour(r) : (t => `hsl(${20 + 200 * t},55%,${62 - 30 * t}%)`)((r[C.lat] - lat0) / Math.max(1e-6, lat1 - lat0));
+    rows.forEach((r, i) => { const h = `<b>${esc(r[C.name])}</b> · ${esc(r[C.modern])}<br>Ptolemy ${dm(r[C.lon_o])} E, ${dm(r[C.lat_o])} N; real ${r[C.lat].toFixed(2)}°, ${r[C.lon].toFixed(2)}°`;
+      const a = fa(A[i]), b = fb(B[i]); dot(svg, a[0], a[1], sm ? 3.4 : 4, col(r), r, h); dot(svg, b[0], b[1], sm ? 3.4 : 4, col(r), r, h); });
+    const place = (x, y, t, d, x0, x1) => { let tx = lbl(svg, x + d[0], y + d[1], t, "lab s b", d[0] < 0 ? "end" : "start"); const bb = tx.getBBox();
+      if (bb.x < x0 + 2 || bb.x + bb.width > x1 - 2) { tx.remove(); const left = bb.x < x0 + 2; tx = lbl(svg, x + (left ? 7 : -7), y + d[1], t, "lab s b", left ? "start" : "end"); } };
+    (opt.labels || []).forEach(([pid, t, ap, bp]) => { const i = rows.findIndex(r => r[C.id] === pid); if (i < 0) return; const a = fa(A[i]), b = fb(B[i]);
+      place(a[0], a[1], t, ap, 0, pw); place(b[0], b[1], t, bp, sm ? 0 : pw + gap, sm ? pw : W); });
+    const sbk = 200 * k; el("line", { x1: pw - 14 - sbk, x2: pw - 14, y1: ph - 6, y2: ph - 6, stroke: css("--fg"), "stroke-width": 2 }, svg); lbl(svg, pw - 14, ph - 12, "200 km", "lab s", "end");
+  });
+}
+function britChart() {
+  const rows = PL.filter(r => r[C.id].startsWith("2.03."));
+  twinChart("britChart", rows, { aria: "Britain in Ptolemy's coordinates and in reality", realBox: [-9, 49.5, 3, 59.5], coasts: SITE.coasts.filter(s => s.sec.startsWith("2.03.")).map(s => s.pts),
+    labels: [["2.03.27.02", "London", [7, 4], [7, 4]], ["2.03.17.01", "York", [7, -4], [7, -4]], ["2.03.05.03", "Duncansby Head", [-7, -8], [7, 0]], ["2.03.01.08", "Mull of Kintyre", [-7, 12], [-7, 0]], ["2.03.03.10", "Land's End", [-7, 0], [-7, 0]], ["2.03.02.08", "Solway", [-7, 10], [-7, 10]]] });
+}
+function indiaChart() {
+  const rows = PL.filter(r => MAPK[r[C.map]] === "AS10" || MAPK[r[C.map]] === "AS12");
+  twinChart("indiaChart", rows, { aria: "India and Sri Lanka in Ptolemy's coordinates and in reality", realBox: [66, 5, 90, 36], ptolLine: SITE.taprobane, closeLine: true, extraP: SITE.taprobane,
+    labels: [["7.01.62.04", "Barygaza", [-7, 0], [-7, 0]], ["7.01.09.06", "Cape Komaria", [-7, 12], [-7, 6]], ["7.01.73.03", "Patna", [7, -4], [7, -4]], ["7.01.45.05", "Taxila", [7, -4], [7, -4]], ["7.04.04.08", "Dondra Head", [7, 10], [7, 8]]] });
+}
+function caspChart() {
+  const ids = ["5.09.12.05", "5.09.12.03", "5.09.12.04", "5.12.02.03", "5.12.02.07", "5.12.01.07", "6.02.02.03", "6.14.02.04", "6.09.01.05", "6.14.02.05"];
+  const rows = ids.map(i => PL[byId[i]]).filter(Boolean);
+  twinChart("caspChart", rows, { aria: "The Caspian in Ptolemy's coordinates and in reality", realBox: [44, 35, 64, 49], realPoly: SITE.caspian, realPts: SITE.caspian.map(c => [c[0] * Math.cos(c[1] * D2R) * 111.2, c[1] * 111.2]),
+    coasts: SITE.coasts.filter(s => ["5.09.12", "5.12.02", "6.02.02", "6.09.02", "6.14.02"].includes(s.sec)).map(s => s.pts),
+    colour: r => ["6.09.01.05", "6.14.02.05"].includes(r[C.id]) ? css("--af") : css("--eu"),
+    labels: [["5.09.12.05", "Volga", [7, -4], [7, -6]], ["6.14.02.04", "Ural", [7, -4], [7, 0]], ["5.12.01.07", "Kura", [-7, 4], [-7, 4]], ["6.02.02.03", "Sefid Rud", [-7, 10], [7, 10]], ["6.09.01.05", "Oxus", [7, 4], [7, 4]], ["6.14.02.05", "Jaxartes", [7, -4], [7, -4]]] });
+}
+function regChart() {
+  const box = document.getElementById("regChart"); const D = SITE.regions.filter(r => r.ranked).sort((a, b) => a.shape_km - b.shape_km);
+  resp(box, (W, sm) => { const lw = sm ? 150 : 200, rh = 26, top = 4, H = top + D.length * rh + 26, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Median error by regional map" }, box);
+    const mx = Math.max(...D.map(d => d.f1_km)) * 1.08, x = v => lw + v / mx * (W - lw - 40);
+    [0, 200, 400, 600].filter(v => v < mx).forEach(v => { el("line", { x1: x(v), x2: x(v), y1: top, y2: top + D.length * rh, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 8, v + " km", "lab s m", "middle"); });
+    D.forEach((d, i) => { const y = top + i * rh; lbl(svg, lw - 8, y + rh / 2 + 4, d.name, "lab", "end");
+      const r2 = el("rect", { x: x(0), y: y + 4, width: x(d.f1_km) - x(0), height: rh - 8, fill: css("--rule") }, svg);
+      const r1 = el("rect", { x: x(0), y: y + 8, width: x(d.shape_km) - x(0), height: rh - 16, fill: css(CONTV[CN.indexOf(d.continent)]) }, svg);
+      [r1, r2].forEach(r => { r.addEventListener("mousemove", e => showTip(`<b>${esc(d.name)}</b><br>${d.n} places<br>shape: ${fmt(d.shape_km)} km; placement: ${fmt(d.f1_km)} km`, e.clientX, e.clientY)); r.addEventListener("mouseleave", hideTip); });
+      lbl(svg, x(Math.max(d.f1_km, d.shape_km)) + 5, y + rh / 2 + 4, fmt(d.shape_km), "lab s b"); }); });
+  document.getElementById("regLegend").innerHTML = CN.map((c, i) => `<span><i class="sq" style="background:var(${CONTV[i]})"></i>Shape, ${c}</span>`).join("") + `<span><i class="sq" style="background:var(--rule)"></i>Placement</span>`;
+}
+function regTable() {
+  const t = document.getElementById("regTable"); const D = SITE.regions;
+  t.innerHTML = `<thead><tr><th>Regional map</th><th class="r">Places</th><th class="r">Shape</th><th class="r">Placement</th><th class="r">Latitude</th></tr></thead><tbody>` +
+    D.map(d => `<tr data-k="${esc(d.map)}"><td><span class="chip" style="background:var(${CONTV[CN.indexOf(d.continent)]})"></span>${esc(d.name)}</td><td class="r">${d.n}</td><td class="r">${d.shape_km == null || !d.ranked ? "too few" : fmt(d.shape_km) + " km"}</td><td class="r">${fmt(d.f1_km)} km</td><td class="r">${d.lat_err > 0 ? "+" : ""}${d.lat_err.toFixed(1)}°</td></tr>`).join("") + "</tbody>";
+  t.querySelectorAll("tr[data-k]").forEach(tr => tr.onclick = () => { const rows = PL.filter(r => MAPK[r[C.map]] === tr.dataset.k); if (!rows.length) return; const b = boxOf(rows); fitBoth(b[0], b[1]);
+    document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+function recChart() {
+  const box = document.getElementById("recChart"); const H_ = SITE.rec_hist;
+  resp(box, (W, sm) => { const H = 240, ml = 46, mb = 40, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Differences between the Omega and Xi recensions" }, box);
+    const mx = Math.max(...H_.map(d => d.n)) * 1.12, bw = (W - ml - 10) / H_.length, y = v => H - mb - v / mx * (H - mb - 12);
+    [0, 1000, 2000, 3000].filter(v => v < mx).forEach(v => { el("line", { x1: ml, x2: W - 10, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, ml - 6, y(v) + 4, fmt(v), "lab s m", "end"); });
+    H_.forEach((d, i) => { const x = ml + i * bw; const rr = el("rect", { x: x + 3, y: y(d.n), width: bw - 6, height: y(0) - y(d.n), fill: i === 0 ? css("--e1") : css("--ptol"), "fill-opacity": .88 }, svg);
+      rr.addEventListener("mousemove", e => showTip(`<b>${esc(d.label)}</b><br>${fmt(d.n)} entries`, e.clientX, e.clientY)); rr.addEventListener("mouseleave", hideTip);
+      lbl(svg, x + bw / 2, y(d.n) - 5, fmt(d.n), "lab s", "middle"); lbl(svg, x + bw / 2, H - 22, sm ? d.short : d.label, "lab s m", "middle"); });
+    lbl(svg, (ml + W) / 2, H - 4, "difference between Omega and Xi", "lab s m", "middle"); });
+}
+
+/* ---------- theme ---------- */
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark";
+  const P = pal();
+  if (wReady) { wm.setPaintProperty("bg", "background-color", P.sea); wm.setPaintProperty("land", "fill-color", P.land); wm.setPaintProperty("borders", "line-color", P.border); wm.setPaintProperty("pc", "line-color", P.ptol); }
+  if (pReady) { pm.setPaintProperty("bg", "background-color", P.panel); pm.setPaintProperty("coast", "line-color", P.ptol); pm.setPaintProperty("grid", "line-color", ["match", ["get", "k"], 2, P.ptol, P.muted]); pm.setPaintProperty("realc", "line-color", P.muted); pm.setPaintProperty("oth", "circle-color", P.muted);
+    pm.setPaintProperty("xi", "line-color", P.ink); pm.setPaintProperty("xip", "circle-stroke-color", P.ink); gridText(); }
+  recolour(); redraws.forEach(f => f()); };
+
+startMaps(); side(); stretchChart(); alexChart(); britChart(); indiaChart(); caspChart(); regChart(); regTable(); recChart();
+</script>
+/*FULLSCREEN*/
+</body>
+</html>

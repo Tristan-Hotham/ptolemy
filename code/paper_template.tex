@@ -1,0 +1,135 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\newfontfamily\headfont{Inter}[UprightFont=*-ExtraBold,BoldFont=*-ExtraBold,Extension=.otf,Path=/usr/share/fonts/opentype/inter/]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,array,xcolor,longtable}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[round]{natbib}
+\usepackage{setspace}
+\setstretch{1.05}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\titleformat{\section}{\headfont\Large}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\headfont\large}{\thesubsection}{0.8em}{}
+\captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
+\hypersetup{pdftitle={Ptolemy's World, Measured},pdfauthor={Tristan Hotham}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Ptolemy's World, Measured\par}
+\vspace{0.4em}
+{\large The coordinates of the Geography set against a modern map:\\{{match.places|int}} identified places, the stretch in longitude, and the regions Ptolemy drew best and worst\par}
+\vspace{1.2em}
+{\large Tristan Hotham\par}
+\vspace{0.3em}
+{\small Independent researcher\\
+ORCID: 0000-0003-4931-9349\\
+DOI: \href{https://doi.org/{{meta.doi}}}{https://doi.org/{{meta.doi}}}\par}
+\vspace{0.8em}
+2026
+\end{center}
+
+\begin{quote}
+\small
+\begin{center}\textbf{Abstract}\end{center}
+Ptolemy's Geography (about AD 150) records the known world as a table of longitudes and latitudes. Using Grasshoff and Defaux's open catalogue of its main books ({{source.rows|int}} entries, {{source.with_coords|int}} with coordinates), I matched the editors' modern identifications of {{match.matched|int}} point features to modern coordinates through the Pleiades gazetteer, the Digital Atlas of the Roman Empire and hand-located coastal landmarks, giving {{match.places|int}} distinct places ({{match.high_pct|int}}\% at high confidence), and compared his coordinates with the real positions. Read as written and aligned on Alexandria, the median place is {{fit.f0.median_km|int}} km out, and the error grows with distance from Alexandria (rank correlation {{alex.spearman_f0|f2}}). Almost all of this is a stretch in longitude: real longitude is best predicted by {{fit.b|f2}} times Ptolemy's, within {{fit.b_vs_stadia_pct|f1}}\% of the ratio 500/700 implied by his small Earth, and this three-parameter correction reduces the median error to {{fit.f1.median_km|int}} km, as low as a six-parameter affine fit ({{fit.f2.median_km|int}} km). Regional distortions remain: Scotland is turned {{scotland.turn|int}} degrees clockwise relative to England, the Indian peninsula spans {{india.lat_span_ptol|f1}} rather than {{india.lat_span_true|f1}} degrees of latitude, Taprobane (Sri Lanka) covers about {{taprobane.area_ratio|f1}} times its real area, and the Caspian, correctly enclosed, is as wide as it is long. After each regional map's own best similarity transform, Sardinia and Sicily, Thrace and Greece are drawn best (median {{regions.EU07.shape_km|int}} to {{regions.EU10.shape_km|int}} km) and India worst ({{regions.AS10.shape_km|int}} km). The Omega and Xi recensions agree exactly for {{rec.same_pct|int}}\% of shared entries and fit reality equally well.
+
+\textbf{Keywords:} Ptolemy; Geography; ancient cartography; historical geography; map distortion; Pleiades; open data
+\end{quote}
+
+\section{Introduction}
+Claudius Ptolemy's \textit{Geography}, compiled in Alexandria around AD 150, is a manual of mapmaking and a table. Its first book discusses the size of the Earth, the sources, and two projections; Books 2 to 7 list some eight thousand localities, province by province, each with a longitude counted in degrees east of the Fortunate Isles and a latitude north or south of the equator; Book 8 divides the world into 26 regional maps. The coordinates shaped the European picture of the world from their rediscovery in Byzantium around 1300 until the sixteenth century.
+
+The distortions of Ptolemy's world are well known in outline: the inhabited world is stretched from east to west, Scotland is turned towards the east, India is truncated while Taprobane is enlarged, and the Indian Ocean is closed by an unknown southern land. This paper measures them on a large set of identified places, using an open edition of the coordinates \citep{cat} and open gazetteers, and reports how much of the error a single simple correction removes. It accompanies an interactive comparison of Ptolemy's coordinates and a modern map (\url{{{meta.page}}}).
+
+\section{Data}
+\textbf{The catalogue.} \citet{cat} give, for every entry of Books 2 to 7, an identifier (book, chapter, section, entry), the regional map, the name in German, the editors' modern identification in German (blank where unknown), and longitude and latitude in the Omega and Xi recensions. There are {{source.rows|int}} entries; {{source.with_coords|int}} have coordinates ({{source.omega|int}} in Omega, {{source.xi|int}} in Xi, {{source.both|int}} in both). Ptolemy's longitudes run from {{source.min_lon|int}} to {{source.max_lon|int}} degrees and his latitudes from {{source.min_lat|f1}} to {{source.max_lat|f1}}.
+
+\textbf{Gazetteers.} Pleiades version {{meta.pleiades_version|raw}} \citep{pleiades}, with ancient and modern names and place types; the Digital Atlas of the Roman Empire \citep{dare}, with Latin, Greek and modern names; and Natural Earth towns and outlines \citep{naturalearth}.
+
+\section{Methods}
+\textbf{Feature types.} Each entry was classed by its German name as a settlement, cape, river mouth, harbour, island, river source, point along a river, mountain, boundary point or lake. Only the point features (settlements, capes, mouths, harbours, islands) were used: {{source.points|int}} with coordinates, of which the editors identify {{source.points_identified|int}} ({{source.identified_pct|int}}\%). Unidentified entries were never matched.
+
+\textbf{Matching.} An identified entry was matched to a gazetteer place inside a generous box around its chapter's region when (high confidence) the place's ancient names contain Ptolemy's name and its modern names contain the editors' identification ({{match.gaz_both|int}} places), or (medium) one of the two names matches a single place, all candidates lying within 25 km of each other ({{match.gaz_anc|int}} by ancient name, {{match.gaz_mod|int}} by modern name). Names were compared on skeletons that ignore Greek and Latin orthography and German transliteration; Pleiades places typed as regions, rivers, peoples or mountains could not match a settlement. Capes, river mouths, estuaries and some cities beyond the gazetteers were located by hand for the editors' identification ({{match.hand|int}} places, each marked high or medium). Ptolemy's errors are spatially smooth, so each match was compared with its eight nearest neighbours on his map: the residual of a simple per-region fit was compared with the neighbours' median. {{match.dropped_dev|int}} medium matches departing by more than 300 km were dropped; high and hand matches departing that much were inspected one by one and {{match.rejected|int}} rejected. Where one real place appears twice the first entry was kept. The result is {{match.places|int}} places with Omega coordinates: {{match.europe|int}} in Europe, {{match.africa|int}} in Africa and {{match.asia|int}} in Asia.
+
+\textbf{Transforms.} Errors are great-circle distances between the real place and the position a transform assigns to Ptolemy's coordinates. F0 shifts his longitudes so that Alexandria falls in place and keeps his latitudes. F1 fits modern longitude as $a + b\lambda_P$ and modern latitude as $\varphi_P + c$ by least squares (longitude residuals weighted by the cosine of latitude). F2 is a general affine transform; F3 a Helmert (similarity) transform between grids drawn with the aspect of the parallel of Rhodes, 36 degrees; F4 is F1 fitted per regional map. The shape error of a region is the residual of a Helmert transform fitted to that region alone in local kilometres.
+
+{{TABLE_FITS}}
+
+\section{Results}
+\subsection{The stretch in longitude}
+From Cape St Vincent to Sera (taken by the editors as Xi'an), Ptolemy counts {{stretch.ptol_span|f1}} degrees of longitude against a real {{stretch.true_span|f1}}, a stretch of {{stretch.ratio|f2}}. Measured from Alexandria, Ptolemy's longitude difference is {{stretch.slope_alex|f2}} times the real one (Figure~\ref{fig:stretch}), on both sides of Alexandria. The fitted F1 factor is $b = {{fit.b|raw}}$ (Europe {{fit.b_europe|raw}}, Africa {{fit.b_africa|raw}}, Asia {{fit.b_asia|raw}}). Ptolemy adopted a degree of 500 stadia where Eratosthenes had 700; if distances in stadia were broadly right, his degrees should be shrunk by $500/700 = {{fit.stadia_ratio|raw}}$, which $b$ matches to within {{fit.b_vs_stadia_pct|f1}}\%. On F1 his prime meridian falls at {{fit.prime_meridian_w|f1}} degrees west.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_maps.png}
+\caption{Ptolemy's coordinates on a plain grid of his degrees (left; his coasts joined in the order he lists them) and the matched places at their real positions (right), coloured by error under F1.}\label{fig:maps}\end{figure}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_stretch.png}
+\caption{Ptolemy's longitude difference from Alexandria against the real one.}\label{fig:stretch}\end{figure}
+
+\subsection{Error and distance from Alexandria}
+Under F0 the median error rises from {{alex.near_f0|int}} km within 1,000 km of Alexandria to {{alex.far_f0|int}} km beyond 4,000 km ({{alex.far_n|int}} places); the rank correlation of error with distance from Alexandria is {{alex.spearman_f0|f2}}, falling to {{alex.spearman_f1|f2}} under F1 (Figure~\ref{fig:alex}). The median F0 error is {{alex.f0_pct_all|int}}\% of the distance from Alexandria. Latitudes are better than longitudes: the median absolute latitude error is {{lat.median_abs|f2}} degrees and {{lat.within1_pct|int}}\% are within a degree, but they are biased regionally, by {{lat.britain|f1}} degrees in the British Isles and {{lat.africa|f1}} in Roman Africa.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_alex.png}
+\caption{Median error by distance from Alexandria, as written and under F1.}\label{fig:alex}\end{figure}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_overlay.png}
+\caption{Ptolemy's coasts transformed by F1 and laid on the real map.}\label{fig:overlay}\end{figure}
+
+\subsection{Scotland, India, Taprobane}
+Fitted separately, Ptolemy's Scotland ({{scotland.n_scot|int}} places north of 55 degrees) is rotated {{scotland.rot_scot|f1}} degrees and his England and Wales ({{scotland.n_eng|int}} places) {{scotland.rot_eng|f1}} degrees, a relative turn of {{scotland.turn|f1}} degrees clockwise; the bearing from the Solway Firth to Duncansby Head is {{scotland.brg_true|int}} degrees in reality and {{scotland.brg_ptol|int}} on his map (Figure~\ref{fig:britain}).
+
+From Barygaza (Bharuch) to Cape Komaria (Cape Comorin) is {{india.lat_span_true|f1}} degrees of latitude in reality and {{india.lat_span_ptol|f1}} on Ptolemy's map; Komaria is {{india.komaria_err|f1}} degrees too far north and the coast between runs at {{india.brg_ptol|int}} instead of {{india.brg_true|int}} degrees. His Taprobane, the coast in sections 7.4.2 to 7.4.7 ({{taprobane.n_coast|int}} points), spans {{taprobane.lat_span_o|f1}} degrees of latitude, from {{taprobane.lat_max_o|f1}} N to {{taprobane.lat_min_o|f1}}, against {{taprobane.lat_span|f1}} for Sri Lanka, and encloses {{taprobane.area_ptol|int}} km$^2$ when his longitudes are scaled by $b$, about {{taprobane.area_ratio|f1}} times the real island's {{taprobane.area_true|int}} km$^2$ (Figure~\ref{fig:india}). Only {{taprobane.n_matched|int}} places in Taprobane and {{india.n|int}} in India are matched, so these figures rest on few points.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_britain.png}
+\caption{Britain in Ptolemy's coordinates and in reality, at the same scale.}\label{fig:britain}\end{figure}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_india.png}
+\caption{India and Taprobane in Ptolemy's coordinates and in reality, at the same scale.}\label{fig:india}\end{figure}
+
+\subsection{Enclosed seas}
+For {{caspian.n|int}} river mouths on the real Caspian shore, the real spread is {{caspian.ns_true|int}} km north to south and {{caspian.ew_true|int}} km east to west; Ptolemy's is {{caspian.ns_ptol|int}} and {{caspian.ew_ptol|int}} km (longitudes scaled by $b$). He brings the Oxus and Jaxartes into the Caspian, though their mouths lie in the Aral Sea {{caspian.oxus_to_caspian_km|int}} and {{caspian.jaxartes_to_caspian_km|int}} km from its shore (Figure~\ref{fig:caspian}). In the Indian Ocean, Cape Prason (Cape Delgado in the editors' reading) is placed at {{ocean.prason_lat_o|int}} degrees, {{ocean.prason_south_deg|f1}} degrees too far south, and Kattigara (near Hanoi in their reading) at {{ocean.kattigara_lat_o|f1}}, {{ocean.kattigara_south_deg|f1}} degrees too far south and {{ocean.kattigara_err_km|int}} km from its F1 position; the text joins the two by unknown land.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_caspian.png}
+\caption{The Caspian and the mouths of the Oxus and Jaxartes in Ptolemy's coordinates and in reality.}\label{fig:caspian}\end{figure}
+
+\subsection{Regional maps}
+Table~\ref{tab:regions} and Figure~\ref{fig:regions} give the median shape and placement errors for each regional map. Among the {{n_ranked|int}} maps with at least {{min_n|int}} places, shape error is lowest for Sardinia and Sicily ({{regions.EU07.shape_km|int}} km), Dacia, Moesia and Thrace ({{regions.EU09.shape_km|int}} km) and Greece ({{regions.EU10.shape_km|int}} km), and highest for the British Isles ({{regions.EU01.shape_km|int}} km), Inner Libya and Ethiopia ({{regions.AF04.shape_km|int}} km) and India ({{regions.AS10.shape_km|int}} km). Placement under F1 is best for Cyprus, Syria and Mesopotamia ({{regions.AS04.f1_km|int}} km) and Cyrenaica and Egypt ({{regions.AF03.f1_km|int}} km).
+
+{{TABLE_REGIONS}}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_regions.png}
+\caption{Median shape and placement error by regional map.}\label{fig:regions}\end{figure}
+
+\subsection{The Omega and Xi recensions}
+Of {{rec.both|int}} entries with coordinates in both recensions, {{rec.same|int}} ({{rec.same_pct|f1}}\%) agree exactly; {{rec.lat_only|int}} differ only in latitude and {{rec.lon_only|int}} only in longitude; the median difference is {{rec.median_diff_arcmin|int}} minutes and {{rec.over1deg|int}} differ by a degree or more (Figure~\ref{fig:rec}). Disagreement is highest in Book 2 ({{rec.by_book.2.pct|f1}}\%) and lowest in Book 5 ({{rec.by_book.5.pct|f1}}\%). Fitted by F1 on the {{rec.fit_n|int}} matched places with both, the two have the same median error ({{rec.fit_omega_km|int}} km) and stretch ({{rec.b_omega|raw}} and {{rec.b_xi|raw}}); where they differ, Xi is closer {{rec.xi_closer|int}} times and Omega {{rec.omega_closer|int}} times.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_recensions.png}
+\caption{Differences between the Omega and Xi recensions.}\label{fig:rec}\end{figure}
+
+\section{Limitations}
+The matched places are those modern scholarship identifies, which favours the Roman Mediterranean; only {{match.india_east|int}} lie east of 60 degrees east, and identifications there, Sera and Kattigara above all, are debated. Matching follows the editors' identifications and inherits their judgements. Coastlines and river mouths have moved since antiquity, especially in deltas, and hand positions are approximate to a few kilometres. The Ptolemaic coasts are his coastal points joined in his order, not a reconstruction of his drawing. The transforms are descriptive: F1's agreement with 500/700 is consistent with the small-Earth explanation of the stretch but does not prove it.
+
+\section{Conclusion}
+Ptolemy's table is far better than his map looks. One number, the shrinking of his longitudes by about seven tenths, removes two thirds of the error, leaving a median of {{fit.f1.median_km|int}} km over {{match.places|int}} places; within the Roman Mediterranean his regional shapes are good to well under 100 km. What remains is local: Scotland folded east, India flattened, Taprobane inflated, the Caspian rounded, the Indian Ocean closed, the errors of a compiler joining sources at the edge of the known world.
+
+\section*{Data and code availability}
+The interactive comparison is at \url{{{meta.page}}}. Data and code are at \url{{{meta.repo}}} and archived with this paper at \url{https://doi.org/{{meta.doi}}}. Derived data are released under CC BY 4.0 and code under the MIT licence. The catalogue is CC BY 4.0; Pleiades data CC BY 3.0; DARE CC BY-SA.
+
+\section*{AI statement}
+I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.
+
+\begin{thebibliography}{9}
+\bibitem[Grasshoff and Defaux(2019)]{cat} Grasshoff, G. and Defaux, O. (2019) Catalog of Ptolemy's Geography, main books. Zenodo. CC BY 4.0. \url{https://doi.org/10.5281/zenodo.3585758}
+\bibitem[Pleiades(2026)]{pleiades} Bagnall, R. et al., eds. (2026) Pleiades: a gazetteer of past places, version {{meta.pleiades_version|raw}}. CC BY 3.0. \url{https://pleiades.stoa.org/}
+\bibitem[Ahlfeldt(2026)]{dare} Ahlfeldt, J. Digital Atlas of the Roman Empire. Lund University. CC BY-SA. \url{https://dare.ht.lu.se/}
+\bibitem[Natural Earth(2026)]{naturalearth} Natural Earth (2026) Admin 0 countries, land and populated places. Public domain. \url{https://www.naturalearthdata.com/}
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,433 @@
+id,locality,modern,ch,ftype,reason
+2.06.04.05,Mearus-Mündung,Mera-Mündung,2.06,mouth,coastal or river feature without hand coordinates
+2.06.14.07,Saetabis-Mündung,Albaida-Mündung,2.06,mouth,coastal or river feature without hand coordinates
+2.06.51.06,Vadinia,Cangas de Onís,2.06,settlement,no gazetteer match
+2.06.59.05,Oretum Germanorum,Granátula,2.06,settlement,no gazetteer match
+2.12.01.09,Alpes Graiae,Grajische Alpen,2.12,settlement,no gazetteer match
+2.14.06.03,Sirota,Veröce,2.14,settlement,modern name ambiguous in the region
+2.16.01.08,Skardon,Sar Planina,2.16,settlement,no gazetteer match
+3.01.16.06,Garganus,Monte Gargano,3.01,settlement,no gazetteer match
+3.01.17.02,Uria,bei Rodi Garganico,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.21.02,Castrum,Giulianova,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.21.05,Potentia,S. Maria a Potenza,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.24.02,Padus (Ausfluss aus Lacus Larius; Lacus Larius),Po (Ausfluss aus Comer See),3.01,settlement,no gazetteer match
+3.01.24.04,Doria (Ausfluss aus Lacus Poeninus; Lacus Poeninus),Dora Baltea (Ausfluss aus kleinem See auf Passhöhe des Grossen St. Bernhard),3.01,settlement,no gazetteer match
+3.01.24.06,Lacus Benacus,Gardasee,3.01,settlement,no gazetteer match
+3.01.26.04,Natiso-Mündung,Natisone-Mündung,3.01,mouth,coastal or river feature without hand coordinates
+3.01.28.02,Pucinum,Prosecco,3.01,settlement,modern name ambiguous in the region
+3.01.42.03,Salinae,Saillon,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.43.04,Sanitium,Senez,3.01,settlement,no gazetteer match
+3.01.49.07,Volci,bei Montalto di Castro,3.01,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+3.01.58.03,Beregra,Montorio al Vomano,3.01,settlement,no gazetteer match
+3.01.58.04,Interamnia,Teramo,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.68.07,Trebula,bei Treglia,3.01,settlement,ancient name ambiguous or rough in the region
+3.01.68.11,Atella,S. Maria d'Atella,3.01,settlement,ancient name ambiguous or rough in the region
+3.02.03.05,Rhoetium (Rhytium),Monte Rao,3.02,settlement,no gazetteer match
+3.02.03.14,Pitanus-Mündung,Ventilegne-Mündung,3.02,mouth,coastal or river feature without hand coordinates
+3.02.05.05,Altar der Tutela,bei der Bravone-Mündung,3.02,settlement,no gazetteer match
+3.02.05.08,Kap Vagum (Kap Avagum),Punta d'Arco,3.02,cape,coastal or river feature without hand coordinates
+3.03.03.03,Sulci,am Golfo di Palmas,3.03,settlement,ancient name ambiguous or rough in the region
+3.04.02.05,Helikon-Mündung,Mazzarà-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.02.07,Timetos-Mündung,Timeto-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.02.10,Chydas-Mündung,S. Fratello-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.03.03,Monalos-Mündung,Póllina-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.03.08,Eleutheros-Mündung,Eleutero-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.04.02,Bathys-Mündung,Iato-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.06.01,Isburos-Mündung,Verdura-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.06.03,Hypsas-Mündung,S. Anna-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.07.05,Motychanos-Mündung,Fiume di Scicli-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.09.03,Alabon-Mündung,Càntera-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.09.04,Pantakyas-Mündung,Porcaria-Mündung,3.04,mouth,coastal or river feature without hand coordinates
+3.04.10.01,Aitne,Ätna,3.04,settlement,no gazetteer match
+3.05.06.03,Karpaten,Karpaten,3.05,settlement,no gazetteer match
+3.05.07.04,Landenge des Dromos des Achill,Landenge der Tendrovskaja Kosa,3.05,settlement,no gazetteer match
+3.05.08.06,Karkinites-Mündung,Kalantschak-Mündung,3.05,mouth,coastal or river feature without hand coordinates
+3.05.12.04,Gerrhos-Mündung,Molotschnaja-Mündung,3.05,mouth,coastal or river feature without hand coordinates
+3.05.15.07,Karpaten,Karpaten,3.05,settlement,no gazetteer match
+3.07.01.10,Karpaten,Karpaten,3.07,settlement,no gazetteer match
+3.08.07.03,Napuka,Klausenburg,3.08,settlement,no gazetteer match
+3.09.01.04,Scardum,Sar planina,3.09,settlement,no gazetteer match
+3.11.02.08,Mündung des Schwarzen Flusses,Kavak-suju-Mündung,3.11,mouth,coastal or river feature without hand coordinates
+3.11.06.02,Bathynias-Mündung,Sazly Dere-Mündung,3.11,mouth,coastal or river feature without hand coordinates
+3.11.06.03,Athyras-Mündung,Kara Su-Mündung,3.11,mouth,coastal or river feature without hand coordinates
+3.11.06.06,Arzos-Mündung,Sazlijka-Mündung,3.11,mouth,coastal or river feature without hand coordinates
+3.11.11.02,Nikopolis am Haimos,Nikiup am Balkan,3.11,settlement,no gazetteer match
+3.11.13.01,Nikopolis* am Nessos,Goce Delcev am Nestos,3.11,settlement,no gazetteer match
+3.11.13.05,Traianopolis,Lutros,3.11,settlement,no gazetteer match
+3.11.14.03,Kyaneen (westliche Insel),Ireke Tasi,3.11,island,no gazetteer match
+3.13.05.03,Kelydnos-Mündung,Dukati-Mündung,3.13,mouth,coastal or river feature without hand coordinates
+3.13.08.01,Nessos,Nestos,3.13,settlement,no gazetteer match
+3.13.15.02,Lydias-Mündung,Loudias-Mündung,3.13,mouth,coastal or river feature without hand coordinates
+3.13.17.08,Spercheia,Kastrorachi,3.13,settlement,modern name ambiguous in the region
+3.13.19.02,Bermion,Vermion,3.13,settlement,no gazetteer match
+3.13.19.05,Olympos,Olymp,3.13,settlement,no gazetteer match
+3.13.42.05,Gonnos,Goni,3.13,settlement,no gazetteer match
+3.13.42.08,Skotussa,Skotussa,3.13,settlement,ancient name ambiguous or rough in the region
+3.13.46.03,Koroneia,Koronia,3.13,settlement,ancient name ambiguous or rough in the region
+3.14.04.02,Kap Poseidion,Kap Skala,3.14,cape,coastal or river feature without hand coordinates
+3.14.04.05,Kap Thyamis,Akra Kalamas,3.14,cape,coastal or river feature without hand coordinates
+3.14.09.03,Amphilochisches Argos,Ag. Ioannis,3.14,settlement,modern name ambiguous in the region
+3.14.11.06,Kap Leukimma,Kap Lefkimnis,3.14,cape,coastal or river feature without hand coordinates
+3.14.12.05,Erikusa,Erikussa,3.14,settlement,no gazetteer match
+3.15.07.04,Ilissos-Mündung,Ilissos-Mündung,3.15,mouth,coastal or river feature without hand coordinates
+3.15.08.04,Kap Kynosura,Kap Stomi,3.15,cape,coastal or river feature without hand coordinates
+3.15.08.05,Asopos-Mündung,Assopos-Mündung,3.15,mouth,coastal or river feature without hand coordinates
+3.15.09.07,Oitäischer Golf (innerster Punkt),Bucht von Atalanti,3.15,harbour,no gazetteer match
+3.15.14.05,Pleuron,bei Mesolongion,3.15,settlement,no gazetteer match
+3.15.17.02,Thronion,Palaiokastro,3.15,settlement,ancient and modern names agree at several places
+3.15.20.12,Akraiphia,Akrefnio,3.15,settlement,no gazetteer match
+3.15.25.04,Budoros-Mündung,Vudoros-Mündung,3.15,mouth,coastal or river feature without hand coordinates
+3.15.28.02,Polyaigos,Poliegos,3.15,settlement,ancient name ambiguous or rough in the region
+3.15.28.03,Stadt auf Therasia,Stadt auf Therasia,3.15,settlement,no gazetteer match
+3.16.03.04,Asopos-Mündung,Assopos-Mündung,3.16,mouth,coastal or river feature without hand coordinates
+3.16.06.03,Peneios-Mündung,Pinios-Mündung,3.16,mouth,coastal or river feature without hand coordinates
+3.16.08.08,Abea,Avia,3.16,settlement,no gazetteer match
+3.16.10.08,Prasia,Plaka,3.16,settlement,no gazetteer match
+3.16.11.03,Inachos-Mündung,Inachos-Mündung,3.16,mouth,coastal or river feature without hand coordinates
+3.16.12.06,Kap Speiraion,Kap Spiri,3.16,cape,coastal or river feature without hand coordinates
+3.16.14.02,Pholoe,Pholoi,3.16,settlement,no gazetteer match
+3.16.14.04,Minthe,Minthi,3.16,settlement,no gazetteer match
+3.16.20.06,Asine,bei Tolo,3.16,settlement,ancient name ambiguous or rough in the region
+3.16.22.05,Lerne,Mili,3.16,settlement,no gazetteer match
+3.16.23.02,Strophaden,Strofades,3.16,settlement,no gazetteer match
+3.17.03.04,Kap Hermaia,Kap Plaka,3.17,cape,coastal or river feature without hand coordinates
+3.17.04.02,Elektras-Mündung,Platys-Mündung,3.17,mouth,coastal or river feature without hand coordinates
+3.17.04.04,Löwen-Kap,Akra Kefalas,3.17,cape,coastal or river feature without hand coordinates
+3.17.04.07,Lethaios-Mündung,Mitropolianos-Mündung,3.17,mouth,coastal or river feature without hand coordinates
+3.17.07.04,Golf von Amphimala,Bucht von Almiros,3.17,harbour,no gazetteer match
+3.17.09.03,Ida,Idi,3.17,settlement,no gazetteer match
+3.17.10.07,Eleutherai,Eleftherna,3.17,settlement,no gazetteer match
+4.01.02.08,Duos (Lyos)-Mündung,Oued el-Mellah-Mündung,4.01,mouth,coastal or river feature without hand coordinates
+4.01.02.11,Rusibis,bei El-Bridja,4.01,settlement,no gazetteer match
+4.01.03.06,Kap des Herakles,Ras el-Hadid,4.01,cape,coastal or river feature without hand coordinates
+4.01.04.03,Suriga,Koubia am Oued Tidsi,4.01,settlement,no gazetteer match
+4.01.04.04,Una-Mündug,Oued Tefetna-Mündung,4.01,settlement,no gazetteer match
+4.01.04.05,Agna-Mündung,Oued Beni-Tamer-Mündung,4.01,mouth,coastal or river feature without hand coordinates
+4.01.04.06,Sala-Mündung,Oued Tamrakt-Mündung,4.01,mouth,coastal or river feature without hand coordinates
+4.01.05.04,Ualon-Mündung,Oued el-Ksar-Mündung,4.01,mouth,coastal or river feature without hand coordinates
+4.01.05.05,Exilissa,Exilissa,4.01,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.01.06.03,Kap des Phoibos,Ras el-Fnidek,4.01,cape,coastal or river feature without hand coordinates
+4.01.06.06,Kap Oleastron,Ras Makked,4.01,cape,coastal or river feature without hand coordinates
+4.01.06.07,Akrath,Ras Kâa Asras,4.01,settlement,no gazetteer match
+4.01.07.04,Kap Metagonion,Cap de l'Agua,4.01,cape,coastal or river feature without hand coordinates
+4.02.02.06,Asarath (Assarath)-Mündung,Oued Nil-Mündung,4.02,mouth,coastal or river feature without hand coordinates
+4.02.03.02,Quiza,El-Benian,4.02,settlement,modern name ambiguous in the region
+4.02.04.01,Kartennos-Mündung,Oued Allala-Mündung,4.02,mouth,coastal or river feature without hand coordinates
+4.02.05.02,Chinalaph-Mündung,Oued Messelmoun-Mündung,4.02,mouth,coastal or river feature without hand coordinates
+4.02.10.01,Sisar-Mündung,Oued-Isser-Mündung,4.02,mouth,coastal or river feature without hand coordinates
+4.02.11.04,Gulos (Lugos)-Mündung,Oued Jinejène-Mündung,4.02,mouth,coastal or river feature without hand coordinates
+4.02.24.05,Manliana,Affreville,4.02,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.02.25.02,Burka,Boghar,4.02,settlement,no gazetteer match
+4.02.26.05,Tigava,El-Kherba,4.02,settlement,modern name ambiguous in the region
+4.02.32.02,Ausum,Sadouri,4.02,settlement,ancient and modern names agree at several places
+4.03.05.05,Rubricatus-Mündung,Oued Mafragh-Mündung,4.03,mouth,coastal or river feature without hand coordinates
+4.03.06.05,Kap des Apollon,Ras Sidi Ali el-Mekki,4.03,cape,coastal or river feature without hand coordinates
+4.03.07.02,Katadas-Mündung,Oued Miliana-Mündung,4.03,mouth,coastal or river feature without hand coordinates
+4.03.11.03,Makomada,Oum-el-Bouaghi,4.03,settlement,"rejected after inspection: Makomada: Ptolemy's coastal Macomades on the Lesser Syrtis, not the inland Numidian site at Oum el Bouaghi"
+4.03.12.02,Kap Zita,Halbinsel Zarris,4.03,cape,coastal or river feature without hand coordinates
+4.03.13.02,Kinyps-Mündung,Oued Caam-Mündung,4.03,mouth,coastal or river feature without hand coordinates
+4.03.14.05,Euphrantas Pyrgos,Esc Sciuescia,4.03,settlement,no gazetteer match
+4.03.35.02,Thuburbo,Henchir Kasbat,4.03,settlement,modern name ambiguous in the region
+4.03.36.01,Sasura,Henchir el-Ksour,4.03,settlement,modern name ambiguous in the region
+4.03.42.03,Musti,Le Krib,4.03,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.04.03.03,Kap Drepanon,Bu Grada,4.04,cape,coastal or river feature without hand coordinates
+4.04.03.07,Festung Diachersis,Bassouan,4.04,settlement,no gazetteer match
+4.04.03.08,Nördliches Kap bzw. Grosse Syrte (Ende),Ras Taiunes,4.04,cape,coastal or river feature without hand coordinates
+4.04.04.03,Lathon-Mündung,Bu Shatin-Mündung,4.04,mouth,coastal or river feature without hand coordinates
+4.04.05.01,Kap bzw. Kastell des Phykes,Ras Sem,4.04,cape,coastal or river feature without hand coordinates
+4.04.05.06,Chersis,Ras Chersa,4.04,settlement,ancient name ambiguous or rough in the region
+4.04.05.07,Kap Zephyrion,Ras Bu Meddad,4.04,cape,coastal or river feature without hand coordinates
+4.04.14.02,Aphrodite-Insel bzw. Laia,Geziret Chersa,4.04,island,no gazetteer match
+4.05.03.02,Skythranios,El-Gaara,4.05,settlement,modern name ambiguous in the region
+4.05.03.03,Kap Kataionion,Marsa Sahel,4.05,cape,coastal or river feature without hand coordinates
+4.05.03.04,Kap Ardanis,Marsa el-Melah,4.05,cape,coastal or river feature without hand coordinates
+4.05.04.05,Zygris (Zytris),Marsa Baqqush,4.05,settlement,ancient and modern names agree at several places
+4.05.04.07,Zagylis,Kasr Schama,4.05,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.05.05.03,Apis-Heiligtum,Bun Aguba,4.05,settlement,no gazetteer match
+4.05.06.02,Kap Pythis (Pythias),Ras Alam el-Rum,4.05,cape,coastal or river feature without hand coordinates
+4.05.06.04,Kap Kallias,Ras Hawala,4.05,cape,coastal or river feature without hand coordinates
+4.05.07.01,Kap Hermaia,Ras el-Kanais,4.05,cape,coastal or river feature without hand coordinates
+4.05.07.04,Kap Derris,Ras Gibeisa,4.05,cape,coastal or river feature without hand coordinates
+4.05.07.06,Kap Glaukon,bei El-Imayid,4.05,cape,coastal or river feature without hand coordinates
+4.05.14.04,Kap Drepanon,Ras Gargub,4.05,cape,coastal or river feature without hand coordinates
+4.05.24.05,Skiathische Region,Wadi 'n-Natrun,4.05,settlement,modern name ambiguous in the region
+4.05.31.04,Nemesium,Bir Hazeh,4.05,settlement,no gazetteer match
+4.05.32.03,Katabathmos Mikros,bei Fukra,4.05,settlement,no gazetteer match
+4.05.32.10,Klimax,Qattara Pass,4.05,settlement,ancient and modern names agree at several places
+4.05.34.09,Palaimareia,Kom el-Idris,4.05,settlement,no gazetteer match
+4.05.51.04,Onuphis,bei Mahallet Minuf,4.05,settlement,no gazetteer match
+4.05.57.04,Ptolemaïs,El-Lahun,4.05,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.05.58.01,Nil (Vereinigung beim Herakleopolites-Gau),Nil,4.05,settlement,no gazetteer match
+4.05.59.04,Ko,El-Kes,4.05,settlement,no gazetteer match
+4.05.71.02,Antaiupolis,Qaw el-Kebir,4.05,settlement,modern name ambiguous in the region
+4.05.75.05,Tyndarische Klippen (3),Ishaila Rocks,4.05,cape,coastal or river feature without hand coordinates
+4.05.77.04,Agathon-Insel,Zeberdjed,4.05,island,no gazetteer match
+4.06.10.04,Bagradas-Mündung,Medjerda-Mündung,4.06,mouth,coastal or river feature without hand coordinates
+4.06.11.04,Kinyps (Vereinigung der beiden Flussarme),Oued Caam,4.06,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.06.12.02,Garamantische Kluft,Wadi el-Agial,4.06,settlement,no gazetteer match
+4.06.32.03,Badiath,Badès,4.06,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.07.10.05,Mosylon*,Ras Antarah,4.07,settlement,modern name ambiguous in the region
+4.07.11.07,Horn des Südens,Ras el-Kheil,4.07,settlement,no gazetteer match
+4.07.11.10,Essina (Essinadu),Wasin,4.07,settlement,ancient name ambiguous or rough in the region
+4.07.11.11,Sarapion,Warsheik,4.07,settlement,no gazetteer match
+4.07.14.02,Grosser Katarakt,Zweiter Katarakt,4.07,settlement,no gazetteer match
+4.07.15.01,Tasitia (Tasitis),Saras,4.07,settlement,no gazetteer match
+4.07.16.01,Abunkis,Ballana,4.07,settlement,ancient name ambiguous or rough in the region
+4.07.17.01,Satachtai,Ashkeit,4.07,settlement,no gazetteer match
+4.07.19.02,Arbus (Arabis),Wadi el-Arab,4.07,settlement,modern name ambiguous in the region
+4.07.19.06,Orbadaru,Kirkeban,4.07,settlement,no gazetteer match
+4.07.19.07,Primis Megale,Amara,4.07,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+4.07.38.02,Pan-Insel,Disset,4.07,island,no gazetteer match
+5.01.02.02,Spitze Bithyniens mit Artemis-Heiligtum,Jaum Burun,5.01,cape,coastal or river feature without hand coordinates
+5.01.02.04,Kap Akritas,Tuzla Burun,5.01,cape,coastal or river feature without hand coordinates
+5.01.04.01,Kap Poseidion,Bozburun,5.01,cape,coastal or river feature without hand coordinates
+5.01.04.02,Askanios-Mündung,Gemlik Dere-Mündung,5.01,mouth,coastal or river feature without hand coordinates
+5.01.04.07,Rhyndakos-Mündung,Adirnas-Mündung,5.01,mouth,coastal or river feature without hand coordinates
+5.01.05.06,Psyllis-Mündung,Göksu-Mündung,5.01,mouth,coastal or river feature without hand coordinates
+5.01.05.07,Kalpa-Mündung,Ilalfli Dere-Mündung,5.01,mouth,coastal or river feature without hand coordinates
+5.01.07.01,Hypios-Mündung,Büyük Melen Su-Mündung,5.01,mouth,coastal or river feature without hand coordinates
+5.01.13.03,Eriboia,Sakar Köy,5.01,settlement,no gazetteer match
+5.01.14.06,Kaisareia bzw. Smyraleia,Zeytinbagi,5.01,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.02.02.05,Aisepos-Mündung,Gönen Çayi-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.02.07,Grenikos-Mündung,Biga Çayi-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.03.03,Simoeis-Mündung,Dümruk Çayi-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.03.05,Skamander-Mündung,Küçük Menderes-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.05.02,Garganon,Arikli,5.02,settlement,no gazetteer match
+5.02.05.07,Kaikos-Mündung,Bakir Çayi-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.06.02,Kap Kaine,Bademli,5.02,cape,coastal or river feature without hand coordinates
+5.02.06.04,Elaia,Kazikbaglari,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.06.06,Kap Hydra,Arslan Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.07.03,Kap Argennon,Ak Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.08.02,Kap Trogylion,Dip Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.10.02,Kap Skopias,Fener Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.11.02,Kap Onugnathos,Ince Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.11.03,Kap Kynostema,Kara Burun,5.02,cape,coastal or river feature without hand coordinates
+5.02.11.05,Kressa,Serçe,5.02,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.02.11.08,Kalbis-Mündung,Dalyan Çayi-Mündung,5.02,mouth,coastal or river feature without hand coordinates
+5.02.14.09,Apollonia am Rhyndakos,Apolyont,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.14.11,Traianopolis,Ortaköy,5.02,settlement,modern name ambiguous in the region
+5.02.14.12,Alydda,Haçimlar,5.02,settlement,no gazetteer match
+5.02.16.09,Iuliogordos,Gördes,5.02,settlement,no gazetteer match
+5.02.16.10,Aigara,Nemrut Kale,5.02,settlement,no gazetteer match
+5.02.18.02,Tripolis,Yenice,5.02,settlement,modern name ambiguous in the region
+5.02.18.07,Itoana,Ipsilihisar,5.02,settlement,no gazetteer match
+5.02.19.04,Apollonia am Salbakos,Medet,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.19.05,Herakleia am Salbakos,Vakif,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.23.03,Abrostola,Alekian,5.02,settlement,no gazetteer match
+5.02.25.06,Siblion,Evciler,5.02,settlement,no gazetteer match
+5.02.25.08,Peltai,Çivril,5.02,settlement,no gazetteer match
+5.02.25.09,Metropolis,Tatarli,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.26.05,Themisonion,Karayükbazar,5.02,settlement,ancient name ambiguous or rough in the region
+5.02.29.06,Kap Malia,Kap Agrelias,5.02,cape,coastal or river feature without hand coordinates
+5.02.29.08,Kap Argennon,Kap Korakas,5.02,cape,coastal or river feature without hand coordinates
+5.02.30.09,Kap Ampelos,Kap Aspro Kabo,5.02,cape,coastal or river feature without hand coordinates
+5.02.33.02,Kap Thoanteion,Akra Kastellos,5.02,cape,coastal or river feature without hand coordinates
+5.02.33.03,Kap Ephialtion,Kap Kastelli,5.02,cape,coastal or river feature without hand coordinates
+5.02.33.04,Potidaion,Pighadia,5.02,settlement,no gazetteer match
+5.02.34.02,Kap des Pan,Kap Sonori,5.02,cape,coastal or river feature without hand coordinates
+5.03.03.04,Limyros-Mündung,Alakir Çayi-Mündung,5.03,mouth,coastal or river feature without hand coordinates
+5.03.03.07,Heiliges Kap,Yedi Burun,5.03,cape,coastal or river feature without hand coordinates
+5.04.02.02,Klimax,Kazalli,5.04,settlement,ancient name ambiguous or rough in the region
+5.04.03.02,Kyptasia,Eren Bogazi,5.04,settlement,ancient and modern names agree at several places
+5.04.03.03,Zaliskos-Mündung,Aksu Çayi-Mündung,5.04,mouth,coastal or river feature without hand coordinates
+5.04.04.04,Hügel von Kelainai,Diner,5.04,settlement,no gazetteer match
+5.04.06.03,Konika,Gönek,5.04,settlement,no gazetteer match
+5.04.06.06,Titua (Situa),Tachna,5.04,settlement,no gazetteer match
+5.04.08.04,Korbeuntos,Beynam,5.04,settlement,no gazetteer match
+5.04.08.07,Rhosologia,Deliler,5.04,settlement,no gazetteer match
+5.04.10.04,Petenessos (Petenissos),Kozanli,5.04,settlement,no gazetteer match
+5.04.10.11,verbranntes' Laodikeia,Ladik,5.04,settlement,modern name ambiguous in the region
+5.05.02.06,Katarraktes-Mündung,Düden Çayi-Mündung,5.05,mouth,coastal or river feature without hand coordinates
+5.05.02.07,Kestros-Mündung,Aksu-Mündung,5.05,mouth,coastal or river feature without hand coordinates
+5.05.03.02,Melas-M.,Manargat Çayi-Mündung,5.05,settlement,no gazetteer match
+5.05.04.02,Seleukeia in Pisidien,Silifke,5.05,settlement,ancient name ambiguous or rough in the region
+5.05.08.05,Dyrzela (Dyrzola),Kesme,5.05,settlement,no gazetteer match
+5.05.08.06,Orbanassa (Olbanassa),Gençek,5.05,settlement,no gazetteer match
+5.05.09.06,Kibyra,Karaburun,5.05,settlement,modern name ambiguous in the region
+5.05.10.03,Attelebusa,Raschat,5.05,settlement,no gazetteer match
+5.06.03.04,Kap des Herakles,Çalti Burun,5.06,cape,coastal or river feature without hand coordinates
+5.06.06.04,Kap Adienon,Kemer Burun,5.06,cape,coastal or river feature without hand coordinates
+5.06.06.07,Archabis-Mündung,Arhavi-Mündung,5.06,mouth,coastal or river feature without hand coordinates
+5.06.06.09,Kissa-Mündung,Kisse-Mündung,5.06,mouth,coastal or river feature without hand coordinates
+5.06.07.06,Sebastopolis 1,Sulusaray,5.06,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.06.09.11,Piala,Barakli,5.06,settlement,no gazetteer match
+5.06.12.02,Zama,Kaman,5.06,settlement,no gazetteer match
+5.06.13.06,Ariarathira,Azizie,5.06,settlement,no gazetteer match
+5.06.15.02,Mustilia,Misti,5.06,settlement,no gazetteer match
+5.06.16.05,Paralais,Beysehir,5.06,settlement,no gazetteer match
+5.06.16.06,Korna,Dinorma,5.06,settlement,no gazetteer match
+5.06.17.04,Olbasa,Kemer,5.06,settlement,no gazetteer match
+5.06.17.05,Musbanda,Musvadi,5.06,settlement,no gazetteer match
+5.06.18.02,Dratai,Bor,5.06,settlement,no gazetteer match
+5.06.18.04,Bazis,Dibektas,5.06,settlement,no gazetteer match
+5.07.03.03,Tapura,Tapur,5.07,settlement,no gazetteer match
+5.07.04.05,Karape,Karababa,5.07,settlement,no gazetteer match
+5.07.04.06,Kasara,Arabkir,5.07,settlement,no gazetteer match
+5.07.04.13,Sarsapa,Ak Ören,5.07,settlement,no gazetteer match
+5.07.04.14,Orsa,Orza,5.07,settlement,no gazetteer match
+5.07.07.03,Tynna,Ulukisla,5.07,settlement,no gazetteer match
+5.07.07.05,Kybistra,Eregli,5.07,settlement,no gazetteer match
+5.07.07.06,Klaudiopolis,Mut,5.07,settlement,no gazetteer match
+5.07.07.08,Podyandos,Pozanti,5.07,settlement,no gazetteer match
+5.07.07.10,Mopsukrene,Kiritlar,5.07,settlement,no gazetteer match
+5.07.08.05,Nyssa,Kirsehir,5.07,settlement,no gazetteer match
+5.07.08.06,Arasaxa,Seresek,5.07,settlement,no gazetteer match
+5.08.02.05,Antiocheia,Güney,5.08,settlement,ancient name ambiguous or rough in the region
+5.08.03.03,Orymagdos-Mündung,Gozulche Çayi-Mündung,5.08,mouth,coastal or river feature without hand coordinates
+5.08.03.09,Kap Zephyrion,Mersin Zafra,5.08,cape,coastal or river feature without hand coordinates
+5.08.04.04,Lamos-Mündung,Lamas Çayi-Mündung,5.08,mouth,coastal or river feature without hand coordinates
+5.08.04.07,Kydnos-Mündung,Tarsos Çayi-Mündung,5.08,mouth,coastal or river feature without hand coordinates
+5.08.04.09,Saros-Mündung,Seyhan Nehri-Mündung,5.08,mouth,coastal or river feature without hand coordinates
+5.08.04.10,Pyramos-Mündung,Ceyhan Nehri-Mündung,5.08,mouth,coastal or river feature without hand coordinates
+5.08.05.04,Domitiopolis,Dindebul,5.08,settlement,no gazetteer match
+5.08.06.08,Lamos,Lamas,5.08,settlement,ancient name ambiguous or rough in the region
+5.08.07.10,Amanos-Pforten,Toprakkale,5.08,settlement,no gazetteer match
+5.09.02.03,Marubios-Mündung,Kagalnik-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.03.01,Grosser Rhombites (Mündung),Jeja (Mündung),5.09,mouth,coastal or river feature without hand coordinates
+5.09.03.02,Theophanios-Mündung,Beisung-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.04.01,Kleiner Rhombites (Mündung),Talgirsk (Mündung),5.09,mouth,coastal or river feature without hand coordinates
+5.09.08.03,Hermonassa*,Akçaabat,5.09,settlement,rejected after inspection: Hermonassa: Ptolemy lists it among the Bosporan towns of the Taman peninsula; the identification with Akçaabat near Trabzon (a namesake) does not fit
+5.09.08.08,Psychros-Mündung,Baltaci Dere-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.09.03,Kap Toretike,Idokopas,5.09,cape,coastal or river feature without hand coordinates
+5.09.09.04,Ampsalis,Mzymta,5.09,settlement,no gazetteer match
+5.09.10.01,Thessyris-Mündung,Tsorica-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.11.02,Sarmatische Pforten,Pass von Darial,5.09,settlement,no gazetteer match
+5.09.11.05,Soanas-Mündung,Sundzha-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.12.02,Soanas-Mündung,Sundzha-Mündung,5.09,mouth,coastal or river feature without hand coordinates
+5.09.15.10,Sarmatische Pforten,Pass von Darial,5.09,settlement,no gazetteer match
+5.09.16.15,Navaris*,Rostov,5.09,settlement,modern name ambiguous in the region
+5.09.28.02,Skopelos,Kopyl,5.09,settlement,no gazetteer match
+5.09.28.05,Ebriapa,Kurschavsk,5.09,settlement,no gazetteer match
+5.10.02.04,Kyaneos-Mündung,Tekhuri-Mündung,5.10,mouth,coastal or river feature without hand coordinates
+5.10.02.06,Neapolis,Egilan,5.10,settlement,no gazetteer match
+5.10.06.01,Mechlessos,Mukheri,5.10,settlement,no gazetteer match
+5.10.06.03,Sarake,Sakaris,5.10,settlement,no gazetteer match
+5.10.06.04,Surion,Senaki,5.10,settlement,no gazetteer match
+5.12.02.01,Soanas-Mündung,Sundzha-Mündung,5.12,mouth,coastal or river feature without hand coordinates
+5.12.02.04,Gelda,Gägäli,5.12,settlement,no gazetteer match
+5.12.02.05,Kasios-Mündung,Geokçay-Mündung,5.12,mouth,coastal or river feature without hand coordinates
+5.12.02.06,Albana*,Alvan,5.12,settlement,no gazetteer match
+5.12.03.07,Tagoda,Lagodekhi,5.12,settlement,no gazetteer match
+5.12.03.08,Bakchia,Bakurtsikhe,5.12,settlement,no gazetteer match
+5.12.03.09,Sanua,Sigmakh,5.12,settlement,no gazetteer match
+5.12.03.10,Deglane,Degna,5.12,settlement,no gazetteer match
+5.12.03.11,Niga,Nisch,5.12,settlement,no gazetteer match
+5.12.04.04,Mosega,Macekhi,5.12,settlement,no gazetteer match
+5.12.04.05,Samunis,Samukh,5.12,settlement,no gazetteer match
+5.12.04.06,Iobula,Alibejli,5.12,settlement,no gazetteer match
+5.12.04.07,Iuna,Dzunut,5.12,settlement,no gazetteer match
+5.12.05.01,Adiabla (Adiabda),Aliabad,5.12,settlement,no gazetteer match
+5.12.05.02,Abliana (Abliama),Abliar,5.12,settlement,no gazetteer match
+5.12.05.03,Mamechia (Mamaichia),Malykh,5.12,settlement,no gazetteer match
+5.12.05.05,Sioda,Suda-gilan,5.12,settlement,no gazetteer match
+5.12.05.06,Baruka,Varta-Sen,5.12,settlement,no gazetteer match
+5.12.06.05,Chobota,Xaçmas,5.12,settlement,no gazetteer match
+5.12.06.06,Boziata (Boziaga),Vardanly,5.12,settlement,no gazetteer match
+5.12.06.07,Misia,Nidz,5.12,settlement,no gazetteer match
+5.12.06.08,Chadacha,Khalkhal,5.12,settlement,no gazetteer match
+5.12.06.09,Alamos (Alunos),Zalam,5.12,settlement,no gazetteer match
+5.12.07.03,Thiauna,Tioneti,5.12,settlement,no gazetteer match
+5.12.07.04,Thabilaka,Taglabian,5.12,settlement,no gazetteer match
+5.13.03.04,Araxes-Mündung,Aras-Mündung,5.13,mouth,coastal or river feature without hand coordinates
+5.13.06.01,Araxes-Mündung,Aras-Mündung,5.13,mouth,coastal or river feature without hand coordinates
+5.13.10.02,Askura,Askureth,5.13,settlement,no gazetteer match
+5.13.10.07,Toga (Goga),Tug,5.13,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.13.11.03,Surta,Surami,5.13,settlement,no gazetteer match
+5.13.11.09,Ptusa,Ad Kirilan,5.13,settlement,no gazetteer match
+5.13.11.10,Glisma,Gilanar,5.13,settlement,no gazetteer match
+5.13.12.03,Elegeia,Pekeviç,5.13,settlement,ancient name ambiguous or rough in the region
+5.13.12.04,Chasira,Arech,5.13,settlement,ancient name ambiguous or rough in the region
+5.13.12.08,Armauria*,Armavir,5.13,settlement,no gazetteer match
+5.13.14.01,Athua (Zathua),Kemach,5.13,settlement,no gazetteer match
+5.13.16.06,Matustana,Shawarshan,5.13,settlement,no gazetteer match
+5.14.01.05,Kap Zephyrion,Kap Zephyros,5.14,cape,coastal or river feature without hand coordinates
+5.14.02.06,Lykos-Mündung,Kuris-Mündung,5.14,mouth,coastal or river feature without hand coordinates
+5.14.02.09,Tetios-Mündung,Tremithios-Mündung,5.14,mouth,coastal or river feature without hand coordinates
+5.14.02.12,Thronoi/Kap Thronoi,Kap Pyla,5.14,cape,coastal or river feature without hand coordinates
+5.14.03.04,Pediaios-Mündung,Pedhikos-Mündung,5.14,mouth,coastal or river feature without hand coordinates
+5.14.03.06,Kap Elaia,Kap Kamara,5.14,cape,coastal or river feature without hand coordinates
+5.14.04.03,Kap der Achäer,Kap Plakati,5.14,cape,coastal or river feature without hand coordinates
+5.14.04.12,Kap Kallinusa,Kap Petra,5.14,cape,coastal or river feature without hand coordinates
+5.14.06.01,Chytros,Degirmenlik,5.14,settlement,no gazetteer match
+5.15.05.10,Chorseas-Mündung,Nahr ez-Zerka-Mündung,5.15,mouth,coastal or river feature without hand coordinates
+5.15.07.02,Euphrat (Übergang bei Thapsakos),Euphrat (Übergang bei Qalaat ed-Dibse),5.15,settlement,no gazetteer match
+5.15.10.03,Arake,Erek,5.15,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.15.10.06,Singa,Sürfaz,5.15,settlement,no gazetteer match
+5.15.14.07,Bethammaria (Bethannaria),Qalaat en-Negm,5.15,settlement,no gazetteer match
+5.15.14.08,Serre,Qalaat es-Sandaliya,5.15,settlement,no gazetteer match
+5.15.16.05,Bakatailloi (Baktaiales),Urde,5.15,settlement,no gazetteer match
+5.15.16.06,Lysia (Audia),Qalaat Burzey,5.15,settlement,no gazetteer match
+5.15.16.07,Seleukeia am Belos,Sqelebiye,5.15,settlement,ancient name ambiguous or rough in the region
+5.15.17.03,Akoraba,Okarib,5.15,settlement,no gazetteer match
+5.15.18.05,Maronias,Maarra,5.15,settlement,no gazetteer match
+5.15.22.04,Abila (Abela) bzw. Lysania,Wadi Barada,5.15,settlement,ancient name ambiguous or rough in the region
+5.15.22.06,Ina,Hine,5.15,settlement,no gazetteer match
+5.15.22.09,Abila,Tell Abil,5.15,settlement,ancient name ambiguous or rough in the region
+5.15.23.05,Dion,Tell el-Askari,5.15,settlement,no gazetteer match
+5.15.24.05,Putea,Abulfuaris,5.15,settlement,no gazetteer match
+5.15.24.09,Danaba (Adanaba),Sadad,5.15,settlement,no gazetteer match
+5.15.24.14,Atera (Ateia),Kastal,5.15,settlement,ancient name ambiguous or rough in the region
+5.16.09.05,Iazoros,Sar,5.16,settlement,no gazetteer match
+5.16.10.03,Berzama,Bir es-Seba,5.16,settlement,no gazetteer match
+5.17.04.05,Gubba,Wadi el-Gubey,5.17,settlement,no gazetteer match
+5.17.05.10,Moka,Mkaur,5.17,settlement,no gazetteer match
+5.18.05.08,Maubai,Abt Ali,5.18,settlement,no gazetteer match
+5.18.06.05,Apphadana,Feden,5.18,settlement,no gazetteer match
+5.18.06.06,Banake,Anka,5.18,settlement,no gazetteer match
+5.18.06.08,Bethauna,Anatho,5.18,settlement,no gazetteer match
+5.18.07.04,Pakoria,Bariah,5.18,settlement,no gazetteer match
+5.18.09.09,Karthara,Hadrah,5.18,settlement,no gazetteer match
+5.18.09.10,Manchane,Mankabe,5.18,settlement,no gazetteer match
+5.18.09.13,Apameia,Qurnah,5.18,settlement,no gazetteer match
+5.18.10.09,Sakane,Sehan,5.18,settlement,no gazetteer match
+5.18.12.03,Thengubis,Es-Sihl,5.18,settlement,no gazetteer match
+5.18.12.06,Zama,El-Riden,5.18,settlement,no gazetteer match
+5.18.12.07,Sinna,Senn,5.18,settlement,no gazetteer match
+5.18.13.01,Dabausa,Tabus,5.18,settlement,no gazetteer match
+5.19.03.02,Thapsakos (Psatakos),Qalaat ed-Dibse,5.19,settlement,ancient name ambiguous or rough in the region
+5.19.03.03,Birtha (Bithra),Ed-Deir,5.19,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.19.03.04,Gadeirtha (Gardira),Gedeide,5.19,settlement,no gazetteer match
+5.19.03.07,Addara,Ed-Der,5.19,settlement,no gazetteer match
+5.19.04.03,Idikara (Dikara),Diqar,5.19,settlement,no gazetteer match
+5.19.04.04,Iokura (Iskura),Gehre,5.19,settlement,no gazetteer match
+5.19.05.01,Barathena,Baradan,5.19,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.19.05.02,Save,Es-Sawa,5.19,settlement,no gazetteer match
+5.19.05.04,Gauara,El-Gaura,5.19,settlement,no gazetteer match
+5.19.05.05,Aurana,Hauran,5.19,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.19.05.07,Alata,Sirhan,5.19,settlement,no gazetteer match
+5.19.05.08,Erupa,Er-Ruhbe,5.19,settlement,no gazetteer match
+5.19.06.01,Themme,Ain et-Tamr,5.19,settlement,no gazetteer match
+5.19.06.03,Thauba,Ras et-Tubait,5.19,settlement,no gazetteer match
+5.19.06.04,Sevia,El-Zefan,5.19,settlement,no gazetteer match
+5.19.06.05,Dapha,El-Djob,5.19,settlement,no gazetteer match
+5.19.06.07,Odagana,Hedagan,5.19,settlement,no gazetteer match
+5.19.06.10,Arrade,El-Harrat er-Regla,5.19,settlement,no gazetteer match
+5.19.07.01,Obaira,Bayir,5.19,settlement,no gazetteer match
+5.19.07.02,Artemita,Kasr Amera,5.19,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+5.19.07.03,Banacha,Banat,5.19,settlement,no gazetteer match
+5.19.07.05,Alata,Aalem,5.19,settlement,no gazetteer match
+5.19.07.06,Bere,Ekbere,5.19,settlement,no gazetteer match
+5.19.07.07,Kalathua,Cholad,5.19,settlement,no gazetteer match
+5.20.01.08,Tigris-Mündung (östliche),Digla-Mündung (östliche),5.20,mouth,coastal or river feature without hand coordinates
+5.20.05.02,Tigris-Mündung (östliche),Digla-Mündung (östliche),5.20,mouth,coastal or river feature without hand coordinates
+5.20.05.03,Tigris-Mündung (westliche),Digla-Mündung westliche),5.20,mouth,coastal or river feature without hand coordinates
+5.20.08.02,Thelme,Thamal,5.20,settlement,no gazetteer match
+6.01.04.04,Darna,Schinak-Pass,6.01,settlement,no gazetteer match
+6.02.14.03,Niphauanda (Niphauana),Nehavand,6.02,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+6.03.01.10,Oroatis-Mündung,Zohreh-Mündung,6.03,mouth,coastal or river feature without hand coordinates
+6.03.02.01,Tigris-Mündung (westliche),Digla-Mündung,6.03,mouth,coastal or river feature without hand coordinates
+6.03.02.03,Tigris-Mündung (östliche),Digla-Mündung,6.03,mouth,coastal or river feature without hand coordinates
+6.03.02.04,Charax des Pasines,Dschabul,6.03,settlement,no gazetteer match
+6.03.02.14,Oroatis (Oruatis)-Mündung,Zohreh-Mündung,6.03,mouth,coastal or river feature without hand coordinates
+6.04.04.08,Persopolis*,Persepolis,6.04,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+6.04.05.04,Potikara,Naksch-e Rustem,6.04,settlement,dropped: one-name match displaced unlike its neighbours by more than 300 km
+6.04.07.06,Gabai,Gay,6.04,settlement,no gazetteer match
+6.07.05.07,Baitios (Baitiros)-Mündung,Wadi Baisch-Mündung,6.07,mouth,coastal or river feature without hand coordinates
+6.07.13.01,Baitios-Mündung –> 6.7.5,Wadi Baisch-Mündung,6.07,mouth,coastal or river feature without hand coordinates
+6.07.20.03,Klimax,Dschabal Isbil,6.07,settlement,no gazetteer match
+6.07.32.03,Katara,Katar,6.07,settlement,no gazetteer match
+6.07.38.06,Sabbatha* (Saubatha*),Schabwa,6.07,settlement,ancient and modern names agree at several places
+6.10.04.07,Guriane,Ghurian,6.10,settlement,no gazetteer match
+6.18.05.03,Locharna (Lochorna),Lowgar,6.18,settlement,no gazetteer match
+7.01.08.11,Baris-Mündung,Pambiyar-Mündung,7.01,mouth,coastal or river feature without hand coordinates
+7.02.05.11,Perimulischer Golf,Golf von Thailand,7.02,harbour,no gazetteer match

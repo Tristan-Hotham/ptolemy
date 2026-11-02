@@ -1,0 +1,114 @@
+<!-- wp:paragraph -->
+<p><em>Around AD 150 Ptolemy wrote the known world down as a table of coordinates. I matched {{match.places|int}} of his places to where they really are and measured how wrong his map is, and in what ways.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/ptolemy/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23882603">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>Ptolemy's Geography contains no map. It is a manual for drawing one, followed by a table: province by province, from Ireland to China, every town, cape and river mouth he knew, each with two numbers, degrees east of the Fortunate Isles at the western edge of the world and degrees north of the equator. It was the first attempt we know of to put the whole inhabited world on a grid, and for fourteen centuries the world maps of Byzantium and then of Renaissance Europe were drawn from it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Gerd Grasshoff and Oliver Defaux have published the whole table as open data: {{source.rows|int}} entries, {{source.with_coords|int}} with coordinates, with the modern identification of each place where scholars know it. I took those identifications, found their real coordinates through the Pleiades gazetteer of ancient places, the Digital Atlas of the Roman Empire and my own work on capes and river mouths, and kept only the matches I could stand behind: {{match.places|int}} places.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_maps.png|Left, a rectangular grid of Ptolemy's degrees with thousands of coloured dots and brown coastline fragments: Britain and Spain at the top left, the Mediterranean crowded with green dots, Arabia and India spread out to the right and far too wide, Kattigara near the bottom right corner. Right, a modern map of Europe, Africa and Asia with the same places, densest around the Mediterranean, coloured from green for small errors to dark red for errors over 1,000 km|Ptolemy's coordinates on his own grid (left) and the same places today (right), coloured by the size of his error.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A world half as wide again</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The first thing you notice is that Ptolemy's world is far too wide. From Cape St Vincent in Portugal to Sera, the city of the silk people, usually taken to be Xi'an, he counts {{stretch.ptol_span|f1}} degrees of longitude. The real figure is {{stretch.true_span|f1}}. Measured from Alexandria, where he worked, every 10 degrees of real longitude became {{stretch.per10|f1}} of his, to the west as much as to the east.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The usual explanation is the size of the Earth. Ptolemy gave a degree as 500 stadia, where Eratosthenes had reckoned 700. If the travellers' distances he worked from were roughly right, converting them at 500 stadia a degree would make every gap too wide, and to fix it you would shrink his degrees by 500 divided by 700, which is {{fit.stadia_ratio|f2}}. The single best correction I can find in the data is {{fit.b|f2}}.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_stretch.png|Scatter chart of Ptolemy's longitude difference from Alexandria against the real one. The dots, blue for Europe, gold for Africa and red for Asia, lie along a straight line steeper than the dashed line of a true map, with a slope of 1.37, the Asian dots climbing furthest above it|Every 10 degrees of real longitude became {{stretch.per10|f1}} of Ptolemy's.}}
+
+<!-- wp:paragraph -->
+<p>Read exactly as written, his map is good near Alexandria and bad far away: places within 1,000 km are a median {{alex.near_f0|int}} km out, places more than 4,000 km away {{alex.far_f0|int}} km. Shrink his longitudes by {{fit.b|f2}} and the median error across all {{match.places|int}} places falls from {{fit.f0.median_km|int}} km to {{fit.f1.median_km|int}} km. Rome ends up {{places.Rome.f1_km|int}} km from where it should be, Samarkand {{places.Samarkand.f1_km|int}}.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_alex.png|Bar chart of median error by distance from Alexandria. Red bars, for the map as written, rise from 134 km near Alexandria to over 1,400 km beyond 4,000 km; blue bars, after shrinking the longitudes, stay between about 100 and 220 km out to 4,000 km and reach about 650 km beyond|The farther from Alexandria, the worse the map, until the longitudes are shrunk.}}
+
+{{IMG|b_overlay.png|Modern map of Europe, Africa and Asia with Ptolemy's coastlines drawn over it in brown after shrinking his longitudes. Around the Mediterranean the brown lines follow the real coasts closely; Scotland bends away to the east, India is a short stub, a huge shaded Taprobane hangs south of India across the equator, the Caspian is a round sea and Kattigara sits far to the south of Vietnam|Ptolemy's coasts laid on the real map, his longitudes shrunk by {{fit.b|f2}}.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Scotland on its side</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>What the correction cannot fix are the local mistakes, and the most famous is Scotland. North of the Solway, Ptolemy's Britain turns sharply east. On the real map, the Solway Firth to Duncansby Head is a bearing of {{scotland.brg_true|int}} degrees, nearly due north; on his it is {{scotland.brg_ptol|int}}, nearly due east. Fitted separately, his Scotland is turned {{scotland.turn|int}} degrees further than his England and Wales. Coast by coast it is still Scotland, the Clyde, the Forth and the Tay all in order, just rotated.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_britain.png|Two panels at the same scale. Left, Ptolemy's Britain: England and Wales run north, then Scotland bends at a right angle to run east, with Duncansby Head at the far right. Right, the real Britain with the same places, Scotland running north to Duncansby Head. Dots shade from light green in the south to dark purple in the far north|Britain in Ptolemy's coordinates and in reality, at the same scale.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A flattened India and a giant Sri Lanka</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In the east, the errors change character. From Barygaza, modern Bharuch, to Cape Comorin is {{india.lat_span_true|f1}} degrees of latitude; in Ptolemy it is {{india.lat_span_ptol|f1}}. The great triangle of India is flattened against the equator. Off its tip his Taprobane, Sri Lanka, swells to fill the space, running from {{taprobane.lat_max_o|f1}} degrees north to {{taprobane.lat_min_o|f1}} south, across the equator. At the same scale as the rest of his map it covers about {{taprobane.area_ratio|f1}} times the area of the real island.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_india.png|Two panels at the same scale. Left, Ptolemy's India: the places of the west and south coasts lie almost in a horizontal line, and below them a huge brown outline of Taprobane stretches far to the south. Right, the real Indian peninsula, a long triangle, with the small island of Sri Lanka at its tip|India and Taprobane in Ptolemy's coordinates and in reality, at the same scale.}}
+
+<!-- wp:paragraph -->
+<p>He was right, against Eratosthenes and Strabo, that the Caspian is a closed sea; but his Caspian is as wide as it is long, when the real one is {{caspian.ratio_true|f1}} times as long as it is wide, and he brings the Oxus and Jaxartes into it when they really end in the Aral Sea. And he closed the Indian Ocean by mistake, joining East Africa to the land beyond Kattigara with an unknown southern continent. His Kattigara, which the editors place near Hanoi, lies {{ocean.kattigara_south_deg|f1}} degrees too far south.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Where the map is good</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Taking each of Ptolemy's 26 regional maps on its own, and laying it on the real map with the best shift, rotation and scale, the shapes are good to well under 100 km across most of the Roman world: Sardinia and Sicily a median {{regions.EU07.shape_km|int}} km, Greece {{regions.EU10.shape_km|int}} km, Italy {{regions.EU06.shape_km|int}} km. The worst are India ({{regions.AS10.shape_km|int}} km), Inner Libya and Ethiopia ({{regions.AF04.shape_km|int}} km) and, thanks to Scotland, the British Isles ({{regions.EU01.shape_km|int}} km).</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_regions.png|Horizontal bar chart of median error by regional map, shortest at the top: Sardinia and Sicily, Dacia, Moesia and Thrace, and Greece have small shape errors around 40 to 50 km, rising through Italy, Gaul and Asia Minor to the British Isles at 128 km, Inner Libya and Ethiopia at 448 km and India at 528 km at the bottom|Best and worst: median error in shape and placement for each of Ptolemy's regional maps.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The coordinates and identifications are Grasshoff and Defaux's catalogue of the Geography. I used only points (towns, capes, river mouths, harbours, islands) that the editors identify, and matched them to modern coordinates where a gazetteer agreed on the ancient name, the modern name or both, or where I could place a cape or river mouth myself. Matches that sat oddly against their neighbours on Ptolemy's map were dropped or checked by hand. The matched places favour the Roman Mediterranean; only {{match.india_east|int}} lie east of 60 degrees east, so the figures for India and the far east rest on few places and on identifications that are themselves debated. The two manuscript traditions, Omega and Xi, agree exactly for {{rec.same_pct|int}}% of entries and fit reality equally well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/ptolemy/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23882603">Read the paper</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/ptolemy">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Notes and sources</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>G. Grasshoff and O. Defaux, <a href="https://doi.org/10.5281/zenodo.3585758">Catalog of Ptolemy's Geography, main books</a> (2019), CC BY 4.0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li><a href="https://pleiades.stoa.org/">Pleiades</a> gazetteer of past places, version {{meta.pleiades_version|raw}}, CC BY 3.0; <a href="https://dare.ht.lu.se/">Digital Atlas of the Roman Empire</a>, CC BY-SA; <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain).</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->

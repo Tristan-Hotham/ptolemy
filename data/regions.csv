@@ -1,0 +1,27 @@
+map,name,continent,n,f1_km,f4_km,shape_km,lat_err,f0_km,b,rot,scale,lon_c,lat_c,ranked
+EU01,British Isles,Europe,92,432,156.0,128.0,3.0,746,0.1759,43.2,0.637,-2.92,53.31,True
+EU02,Iberia,Europe,240,187,111.0,70.0,0.5,1382,0.7739,13.3,0.836,-4.48,39.81,True
+EU03,Gaul,Europe,130,126,132.0,78.0,0.1,890,0.742,13.4,0.817,3.74,45.89,True
+EU04,Germany,Europe,9,183,118.0,28.0,1.1,591,0.7917,3.6,0.771,8.55,51.43,False
+EU05,Alps and Danube,Europe,104,113,106.0,85.0,-0.3,453,0.5729,-20.7,0.736,16.43,45.05,True
+EU06,Italy and Corsica,Europe,295,101,87.0,74.0,-0.4,575,0.6374,-15.5,0.755,12.98,42.27,True
+EU07,Sardinia and Sicily,Europe,103,119,132.0,42.0,-0.8,627,0.7303,-27.6,0.79,13.35,38.14,True
+EU08,Sarmatia and Crimea,Europe,19,375,104.0,92.0,2.4,381,1.065,-4.6,0.941,34.13,45.37,True
+EU09,"Dacia, Moesia, Thrace",Europe,83,151,110.0,52.0,1.1,353,0.8172,-17.1,0.904,26.39,43.21,True
+EU10,Greece,Europe,290,131,66.0,52.0,-0.7,270,0.5088,-16.7,0.675,22.81,38.23,True
+AF01,Mauretania,Africa,56,454,234.0,96.0,-3.1,1522,0.732,22.7,0.684,1.51,36.17,True
+AF02,Roman Africa,Africa,88,491,172.0,116.0,-4.1,724,0.5657,-28.6,0.621,10.39,36.12,True
+AF03,Cyrenaica and Egypt,Africa,124,93,88.0,84.0,-0.2,94,0.8439,-6.3,0.903,30.77,30.86,True
+AF04,Inner Libya and Ethiopia,Africa,29,569,561.0,448.0,-4.1,515,0.8277,-9.5,0.767,31.99,18.08,True
+AS01,Asia Minor,Asia,357,135,128.0,84.0,0.8,156,0.8387,-10.4,0.797,30.52,38.25,True
+AS02,Asiatic Sarmatia,Asia,16,441,88.0,98.0,3.5,434,0.5217,-2.4,0.56,38.08,44.89,True
+AS03,Caucasus and Armenia,Asia,38,366,176.0,108.0,2.7,402,0.6874,-22.2,0.7,43.22,39.96,True
+AS04,"Cyprus, Syria, Mesopotamia",Asia,191,71,69.0,70.0,-0.2,188,0.7399,3.0,0.816,35.88,34.25,True
+AS05,Media and Persia,Asia,12,234,148.0,116.0,1.1,538,0.6033,-4.2,0.68,48.38,35.19,False
+AS06,Arabia,Asia,13,418,314.0,264.0,-1.3,496,0.7108,16.2,0.827,52.23,21.42,False
+AS07,Central Asia,Asia,10,406,310.0,259.0,1.6,1338,0.4973,-17.5,0.578,64.55,39.9,False
+AS08,Scythia and Serica,Asia,2,1179,,,5.9,3680,,,,101.8,37.2,False
+AS09,Afghanistan and Gedrosia,Asia,6,360,,,1.1,1673,,,,68.8,34.25,False
+AS10,India,Asia,43,599,459.0,528.0,-0.5,1266,0.4204,-3.0,0.58,75.78,17.98,True
+AS11,Further India and China,Asia,2,2202,,,-13.2,4496,,,,95.84,20.61,False
+AS12,Taprobane,Asia,6,382,,,-0.4,1740,,,,80.91,8.41,False
